@@ -1,0 +1,40 @@
+<div class="home-banner" data-stretch="<%= image_url '/assets/index.jpg' %>">
+	<div class="banner-inner container clearfix">
+	  <div class="home-banner-links">
+	  	<%= form_tag "create_information", :id => "pop_form", :multipart => true do %>
+	  	<span class="banner-btn btn">
+        家庭信息导入
+
+        <input class="filePrew" tabindex="3" accept="*.png" name="file" id="pic_url" size="3" type="file" onchange="preview_file('show_wz',this.value)" autocomplete="off">
+        <input type="submit" id="submit" style="display:none" />
+      </span>
+      <% end %>
+	  </div>
+	  <div class="home-banner-links" style="left: 100px;top: 100px;">
+	    <%= link_to "方案导出", "#", class: "banner-btn btn" %>
+	  </div>
+	  <div class="home-banner-links" style="left: 350px;top: 150px;">
+	    <%= link_to "费率表导入", "#", class: "banner-btn btn" %>
+	  </div>
+	</div>
+</div>
+
+<script type="text/javascript">
+  function submit_form(){
+    var file = $("#pic_url").val();
+    if(file == ""){
+      alert("请选择文件");
+    }else {
+    	alert("选择文件");
+      $("#pic_url").submit();
+    }
+  }
+  function preview_file(a,val){
+      $('#'+a).val(val);
+      $("#submit").click();
+  }
+</script>
+
+<style type="text/css">
+	#pic_url,.filePrew{border:0px; padding:0; cursor:pointer; display: block;  position: absolute; top: 0; left:0;height:38px; right: 0px; font-size:12px; opacity:0; filter:alpha(opacity=0); cursor:pointer;color: #F7F8F8;width: 290px;}
+</style>

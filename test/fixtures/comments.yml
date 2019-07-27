@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  insurance_id: 1
+  disease_id: 1
+  status: 1
+  remark: MyText
+
+two:
+  insurance_id: 1
+  disease_id: 1
+  status: 1
+  remark: MyText

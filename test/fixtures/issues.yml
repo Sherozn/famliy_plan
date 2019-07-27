@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  content: MyString
+  insurance_ids: MyString
+  disease_id: 1
+  rank: 1
+  iss_ids: MyString
+
+two:
+  content: MyString
+  insurance_ids: MyString
+  disease_id: 1
+  rank: 1
+  iss_ids: MyString
