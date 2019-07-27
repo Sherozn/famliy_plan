@@ -20,15 +20,6 @@
 </div>
 
 <script type="text/javascript">
-  function submit_form(){
-    var file = $("#pic_url").val();
-    if(file == ""){
-      alert("请选择文件");
-    }else {
-    	alert("选择文件");
-      $("#pic_url").submit();
-    }
-  }
   function preview_file(a,val){
       $('#'+a).val(val);
       $("#submit").click();

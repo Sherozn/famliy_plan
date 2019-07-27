@@ -19,13 +19,26 @@ class HomeController < ApplicationController
   end
 
   def create_information
-  	# xls = Roo::Excelx.new path
-  	# sheet = xls.sheet(0)
-   #  sheet.each_with_index do |arr, j|
-   Rails.logger.info "=====params[:file]===#{params[:file]}"
-  	 xlsx = Roo::Spreadsheet.open(params[:file])
-  	 colname = xlsx.sheet(0).row(1)
-  	 Rails.logger.info "=====colname===#{colname}"
+	  xlsx = Roo::Spreadsheet.open(params[:file])
+	  sheet = xlsx.sheet(0)
+	  # 月开支
+	  month_expenses = sheet.row(1)[2]
+	  # 房贷
+		mortgage = sheet.row(2)[2]
+		# 车贷
+	  car_loans = sheet.row(3)[2]
+	  # 家庭流动资产
+	  current_assets = sheet.row(1)[4]
+	  # 父母赡养费用
+	  parents_support = sheet.row(2)[4]
+	  # 子母教育费用
+	  children_education = sheet.row(3)[4]
+
+	  sheet.each do |rows|
+    
+	 	  Rails.logger.info "=====rows===#{rows}"
+	  end
+  	 
 
   end
 end

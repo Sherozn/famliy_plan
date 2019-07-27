@@ -88,27 +88,27 @@ class Insurance < ApplicationRecord
     end
 	end
 
-	sheet.each_with_index do |arr, index|
+	# sheet.each_with_index do |arr, index|
     	
-    	if index > 2 
-    		name = arr[2].to_s.strip
-    		#初始化disease_flag
-    		if index == 3
-    			disease_flag = nil
-    		end
-    		if !name.blank? && name != disease_flag
-    			arrs = [] << arr
-    			disease_flag = name
-    		  # dis = Disease.find_or_create_by(code:arr[1].to_s.strip,name:name,rank:0,status:0)
-    		else
-    			arrs << arr
-    		end	
-    		dis = Disease.where(name:disease_flag).last
-    		Rails.logger.info "===arrs=======#{arrs}====="
-    		Rails.logger.info "===dis=======#{dis.name}====="
-    		Disease.make_dis(arrs,dis)
-    	end
-    end
+ #    	if index > 2 
+ #    		name = arr[2].to_s.strip
+ #    		#初始化disease_flag
+ #    		if index == 3
+ #    			disease_flag = nil
+ #    		end
+ #    		if !name.blank? && name != disease_flag
+ #    			arrs = [] << arr
+ #    			disease_flag = name
+ #    		  # dis = Disease.find_or_create_by(code:arr[1].to_s.strip,name:name,rank:0,status:0)
+ #    		else
+ #    			arrs << arr
+ #    		end	
+ #    		dis = Disease.where(name:disease_flag).last
+ #    		Rails.logger.info "===arrs=======#{arrs}====="
+ #    		Rails.logger.info "===dis=======#{dis.name}====="
+ #    		Disease.make_dis(arrs,dis)
+ #    	end
+ #    end
 
 	# 获得疾病的核保结果
 	# dis = "甲状腺结节3级"
