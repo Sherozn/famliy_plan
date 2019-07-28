@@ -46,7 +46,7 @@ class Disease < ApplicationRecord
     			arrs << arr
     		end	
     		dis = Disease.where(name:disease_flag).last
-    		Rails.logger.info "===arrs=======#{arrs}====="
+    		
     		Rails.logger.info "===dis=======#{dis.name}====="
     		Disease.make_dis(arrs,dis)
     	end

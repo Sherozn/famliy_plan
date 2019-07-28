@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  insurance_id: 1
+  product_type: 1
+  rank: 1
+  note: MyText
+
+two:
+  name: MyString
+  insurance_id: 1
+  product_type: 1
+  rank: 1
+  note: MyText
