@@ -1,7 +1,10 @@
 class Note < ApplicationRecord
 
-	def self.get_note(arrs)
-		(1..4).each do |product_type|
+	# arrs是疾病的集合
+	# product_types是险种的集合
+	def self.get_note(arrs,product_types)
+		return
+		product_types.each do |product_type|
 			notes = {}
 			Insurance.where(product_type:product_type).order(rank: :desc).each do |ins|
 				arrs.each do |arr|
