@@ -56,8 +56,8 @@ class HomeController < ApplicationController
     			Rails.logger.info "===arrs=======#{arrs}====="
     			product_types = ApplicationController.get_product_types(man_income,woman_income,@member.to_s.strip)
     			Rails.logger.info "===product_types=======#{product_types}====="
-    			notes = Note.get_note(arrs,product_types)
-    			hash[@member.to_s] = notes
+    			notes_arr = Note.get_note(arrs,product_types)
+    			hash[[@member.to_s,notes_arr[1]]] = notes_arr[0]
     			Rails.logger.info "====hash=======#{hash}"
     		end
   			arrs = [] 
@@ -67,6 +67,12 @@ class HomeController < ApplicationController
   			arrs << rows[7].value if rows[7] && rows[7].value
   		end
 	  end
-  	redirect_to :root
+	  @hash = hash
+  	# redirect_to "/show_information"
   end
+
+  # def show_information
+  # 	@hash = params[:hash]
+
+  # end
 end

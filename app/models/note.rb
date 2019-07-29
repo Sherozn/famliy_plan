@@ -15,25 +15,37 @@ class Note < ApplicationRecord
 # 	[大麦,7]=>[[甲状腺结节,1],[脑出血,7]]}}
 	def self.get_note(arrs,product_types)
 		notes = {}
+		row = 0
 		product_types.each do |product_type|
+			row2 = 0
 			insurances = {}
-			Insurance.where(product_type:product_type).order(rank: :desc).each do |ins|
+			min_ins = 7
+			insurances_arr = Insurance.where(product_type:product_type).order(rank: :desc)
+			insurances_arr.each do |ins|
+				row3 = 0
 				ins_arr = []
-				max_rank = 7
+				min_rank = 7
+				max_rank = 0
 				arrs.each do |arr|
 					note = Note.find_by(insurance_id:ins.id,name:arr)
 					if note
-						ins_arr << [arr,note.rank] if note.rank < max_rank
-						max_rank = note.rank 
+						ins_arr << [arr,note.rank] 
+						min_rank = note.rank if note.rank < min_rank
+						max_rank = note.rank if note.rank > min_rank
 					else
 						ins_arr << [arr,7]
+						max_rank = 7
 					end
 				end
-				insurances[[ins.id,max_rank]] = ins_arr
+				if min_rank < min_ins || (min_ins != 1 && min_rank == 7)
+					insurances[[ins.id,min_rank,ins_arr.count]] = ins_arr
+					row += ins_arr.count
+					min_ins = min_rank if min_rank < min_ins
+				end
 			end
-			notes[product_type] = insurances
-			Rails.logger.info "=====notes===========#{notes}==="
+			notes[[product_type,row2]] = insurances
+			# Rails.logger.info "=====notes===========#{notes}==="
 		end
-		notes
+		[notes,row]
 	end
 end

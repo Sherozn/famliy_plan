@@ -1,0 +1,42 @@
+<div class="container clearfix">
+  <div class="issue-list">
+    <table class="active_table" border="1px" style="">
+    <tr>
+      <th>角色</th>
+      <th>险种</th>
+      <th>保险名称</th>
+      <th>当前最优结果</th>
+      <th>疾病</th>
+      <th>核保结果</th>
+    </tr>
+    <% member_tag = nil %>
+    <% @hash.each do |member,value| %>
+      <% sum_row = 0 %>
+      <% value.each do |product_type,ins| %>
+        <% ins.each do |id_rank,ins_rank| %>
+          <% ins_rank.each do |arr| %>
+            <% sum_row += 1 %>
+            <tr>
+              <% if member_tag != member[0] %>
+              <td rowspan="<%= member[1] %>"><%= member[0] %></td>
+              <% member_tag = member[0] %>
+              <% end %>
+              <td ><%= get_product_type(product_type[0]) %></td>
+              <% insurance = Insurance.find(id_rank[0]) %>
+              <td ><%= insurance.name %></td>
+              <td><%= get_rank(id_rank[1]) %></td>
+              <td><%= arr[0] %></td>
+              <% rank = get_rank(arr[1]) %>
+              <% if rank == "待确认" %>
+                <td><%= link_to rank, "/home/" %></td>
+              <% else %>
+                <td><%= rank %></td>
+              <% end %>
+            </tr>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+    </table>
+  </div>
+</div>
