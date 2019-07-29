@@ -71,8 +71,12 @@ class HomeController < ApplicationController
   	# redirect_to "/show_information"
   end
 
-  # def show_information
-  # 	@hash = params[:hash]
+  def new_note
+  	@ins_id = params[:ins_id]
+  	@name = params[:name]
+  	@note = Note.new(insurance_id:@ins_id,name:@name)
+  end
 
-  # end
+  def create_note
+  end
 end

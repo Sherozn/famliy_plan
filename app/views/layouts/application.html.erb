@@ -5,8 +5,9 @@
     <%= csrf_meta_tags %>
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 		<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+		<link rel="stylesheet" href="/assets/bootstrap.css" id="bscss">
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag "application","vendor/jquery.anystretch.min", 'data-turbolinks-track': 'reload'%>
+    <%= javascript_include_tag "application","vendor/jquery.anystretch.min", "common", 'data-turbolinks-track': 'reload'%>
   </head>
 
   <body>
@@ -21,6 +22,7 @@
 		</div>
     <%= yield %>
 
+    <script src="/assets/app.js"></script>
     <script>
 	  	$('.home-banner').anystretch();
 

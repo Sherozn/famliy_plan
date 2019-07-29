@@ -28,7 +28,7 @@
               <td><%= arr[0] %></td>
               <% rank = get_rank(arr[1]) %>
               <% if rank == "待确认" %>
-                <td><%= link_to rank, "/home/" %></td>
+                <td><%= link_to rank, "/new_note/:#{id_rank[0]}/:#{insurance.name}",remote: true %></td>
               <% else %>
                 <td><%= rank %></td>
               <% end %>

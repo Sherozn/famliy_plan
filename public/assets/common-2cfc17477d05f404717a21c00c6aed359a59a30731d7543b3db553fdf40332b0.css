@@ -1,0 +1,148 @@
+/* line 1, /vagrant/famliy_plan/app/assets/stylesheets/common.css.scss */
+body {
+  font-family: sans-serif;
+  margin: 0;
+  font-size: 14px;
+  color: #666;
+}
+
+/* line 7, /vagrant/famliy_plan/app/assets/stylesheets/common.css.scss */
+.container {
+  width: 1170px;
+  margin: 0 auto;
+}
+
+/* line 12, /vagrant/famliy_plan/app/assets/stylesheets/common.css.scss */
+*, *:before, *:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* line 18, /vagrant/famliy_plan/app/assets/stylesheets/common.css.scss */
+.clearfix:before,
+.clearfix:after {
+  content: " ";
+  display: table;
+}
+
+/* line 23, /vagrant/famliy_plan/app/assets/stylesheets/common.css.scss */
+.clearfix:after {
+  clear: both;
+}
+
+/* line 26, /vagrant/famliy_plan/app/assets/stylesheets/common.css.scss */
+.clearfix {
+  *zoom: 1;
+}
+
+/* line 30, /vagrant/famliy_plan/app/assets/stylesheets/common.css.scss */
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* line 36, /vagrant/famliy_plan/app/assets/stylesheets/common.css.scss */
+a {
+  text-decoration: none;
+  color: #f5999d;
+}
+
+/* line 40, /vagrant/famliy_plan/app/assets/stylesheets/common.css.scss */
+a:hover {
+  color: #845534;
+}
+
+/* line 44, /vagrant/famliy_plan/app/assets/stylesheets/common.css.scss */
+.btn-primary {
+  color: white;
+  background: #f5999d;
+  border-color: #f49bc1;
+}
+/* line 48, /vagrant/famliy_plan/app/assets/stylesheets/common.css.scss */
+.btn-primary:hover {
+  background-color: #f49bc1;
+  border-color: #845534;
+}
+
+/* line 53, /vagrant/famliy_plan/app/assets/stylesheets/common.css.scss */
+.btn {
+  display: inline-block;
+  padding: 6px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.428571429;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+/* line 74, /vagrant/famliy_plan/app/assets/stylesheets/common.css.scss */
+form input {
+  font-size: 21px;
+  width: 100%;
+  padding: 10px 12px;
+  color: #101010;
+  border: 1px solid #acacac;
+  outline: none;
+}
+/* line 82, /vagrant/famliy_plan/app/assets/stylesheets/common.css.scss */
+form textarea {
+  height: 210px;
+  font-size: 21px;
+  width: 100%;
+  padding: 10px 12px;
+  color: #101010;
+  border: 1px solid #acacac;
+  outline: none;
+}
+/* line 91, /vagrant/famliy_plan/app/assets/stylesheets/common.css.scss */
+form label {
+  display: inline-block;
+  margin-bottom: 5px;
+  color: #f5999d;
+}
+/* line 96, /vagrant/famliy_plan/app/assets/stylesheets/common.css.scss */
+form dd {
+  margin: 0;
+}
+/* line 99, /vagrant/famliy_plan/app/assets/stylesheets/common.css.scss */
+form .error {
+  margin: 5px 0 9px 0;
+  color: #DB8A14;
+}
+
+/* line 104, /vagrant/famliy_plan/app/assets/stylesheets/common.css.scss */
+.notice {
+  position: absolute;
+  background: #f5999d;
+  right: 50%;
+  bottom: 50%;
+  color: white;
+  padding: 20px;
+  -webkit-box-shadow: 6px 7px 9px -1px rgba(0, 0, 0, 0.68);
+  -moz-box-shadow: 6px 7px 9px -1px rgba(0, 0, 0, 0.68);
+  box-shadow: 6px 7px 9px -1px rgba(0, 0, 0, 0.68);
+}
+
+/* line 115, /vagrant/famliy_plan/app/assets/stylesheets/common.css.scss */
+td {
+  text-align: center;
+  height: 40px;
+}
+
+/* line 120, /vagrant/famliy_plan/app/assets/stylesheets/common.css.scss */
+th {
+  text-align: center;
+  height: 30px;
+}

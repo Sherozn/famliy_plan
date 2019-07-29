@@ -1,0 +1,216 @@
+/* line 1, /vagrant/famliy_plan/app/assets/stylesheets/home.scss */
+.issue-list {
+  background: #fff;
+  clear: both;
+  padding: 0 1em;
+  margin-bottom: 1em;
+  border: 1px solid #ddd;
+}
+
+/* line 8, /vagrant/famliy_plan/app/assets/stylesheets/home.scss */
+article {
+  border-bottom: 1px solid #e3e3e3;
+  position: relative;
+  margin-top: 0;
+  padding: 1em 0;
+}
+/* line 13, /vagrant/famliy_plan/app/assets/stylesheets/home.scss */
+article .body {
+  margin-right: 2em;
+  width: 72%;
+  float: left;
+}
+/* line 17, /vagrant/famliy_plan/app/assets/stylesheets/home.scss */
+article .body .read-more {
+  background-color: #f5999d;
+  color: #fff;
+  font-size: 14px;
+  border-radius: 4px;
+  letter-spacing: -0.3px;
+  display: inline-block;
+  line-height: 1.7;
+  font-weight: 100;
+  padding: 0 5px;
+  margin-top: 2px;
+}
+/* line 29, /vagrant/famliy_plan/app/assets/stylesheets/home.scss */
+article .body .meta-data {
+  color: #999;
+  font-size: 12px;
+}
+/* line 34, /vagrant/famliy_plan/app/assets/stylesheets/home.scss */
+article .body h5 {
+  font-size: 22px;
+  line-height: 35px;
+  font-weight: normal;
+  margin: 0 0 5px;
+}
+/* line 39, /vagrant/famliy_plan/app/assets/stylesheets/home.scss */
+article .body h5 a {
+  color: #555;
+}
+/* line 41, /vagrant/famliy_plan/app/assets/stylesheets/home.scss */
+article .body h5 a:hover {
+  color: black;
+}
+/* line 47, /vagrant/famliy_plan/app/assets/stylesheets/home.scss */
+article .body .icon-top {
+  background-color: #0054a5;
+  color: #fff;
+  font-size: 12px;
+  border-radius: 4px;
+  letter-spacing: -0.2px;
+  display: inline-block;
+  line-height: 1.6;
+  font-weight: 100;
+  padding: 0 6px;
+  float: left;
+  margin-top: 7px;
+  margin-right: 5px;
+}
+/* line 62, /vagrant/famliy_plan/app/assets/stylesheets/home.scss */
+article .body .icon-good {
+  background-color: #f16522;
+  color: #fff;
+  font-size: 12px;
+  border-radius: 4px;
+  letter-spacing: -0.2px;
+  display: inline-block;
+  line-height: 1.6;
+  font-weight: 100;
+  padding: 0 6px;
+  float: left;
+  margin-top: 7px;
+  margin-right: 5px;
+}
+/* line 77, /vagrant/famliy_plan/app/assets/stylesheets/home.scss */
+article .body .as_sb {
+  display: block;
+  overflow: hidden;
+  color: #7d7d7d;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+/* line 85, /vagrant/famliy_plan/app/assets/stylesheets/home.scss */
+article .issue-comment-count {
+  float: right;
+  margin-top: 15px;
+}
+/* line 88, /vagrant/famliy_plan/app/assets/stylesheets/home.scss */
+article .issue-comment-count a {
+  font-size: 45px;
+}
+/* line 91, /vagrant/famliy_plan/app/assets/stylesheets/home.scss */
+article .issue-comment-count .fa {
+  font-size: 30px;
+}
+/* line 95, /vagrant/famliy_plan/app/assets/stylesheets/home.scss */
+article .avatar {
+  width: 85px;
+  border: 1px solid #a5b6c8;
+  /*background:#eef3f7;*/
+  text-align: center;
+}
+
+/* line 105, /vagrant/famliy_plan/app/assets/stylesheets/home.scss */
+.issue-list-header {
+  border-bottom: 1px solid #ddd;
+  margin-top: 0;
+  margin-bottom: 30px;
+  background: #f5999d;
+  color: #fff;
+}
+/* line 111, /vagrant/famliy_plan/app/assets/stylesheets/home.scss */
+.issue-list-header .issue-list-heading {
+  font-size: 2em;
+  font-weight: normal;
+}
+
+/* line 117, /vagrant/famliy_plan/app/assets/stylesheets/home.scss */
+.align {
+  font-family: "museo-sans-condensed";
+  font-size: 20px;
+  text-align: center;
+}
+
+/* line 123, /vagrant/famliy_plan/app/assets/stylesheets/home.scss */
+.home-banner-links {
+  position: absolute;
+  left: 160px;
+  top: 280px;
+}
+/* line 127, /vagrant/famliy_plan/app/assets/stylesheets/home.scss */
+.home-banner-links .banner-btn {
+  padding: 10px 10px;
+  font-size: 1.2em;
+  font-weight: 300;
+  font-family: "museo-sans-condensed";
+  border-radius: 5px;
+  color: #fff;
+  background: rgba(220, 20, 60, 0.2);
+  border: 1px solid transparent;
+}
+/* line 136, /vagrant/famliy_plan/app/assets/stylesheets/home.scss */
+.home-banner-links .banner-btn:hover {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+/* line 142, /vagrant/famliy_plan/app/assets/stylesheets/home.scss */
+.time {
+  color: #a0a0a0;
+  font-size: 0.3em;
+}
+
+/* line 147, /vagrant/famliy_plan/app/assets/stylesheets/home.scss */
+.dataTables_paginate {
+  padding: 10px 0 10px 0;
+  float: right;
+}
+
+/* line 152, /vagrant/famliy_plan/app/assets/stylesheets/home.scss */
+.pagination > span {
+  float: left;
+  padding: 6px 16px;
+  border: 1px solid #eee;
+}
+
+/* line 158, /vagrant/famliy_plan/app/assets/stylesheets/home.scss */
+.signup-form-container, .login-form-container {
+  width: 420px;
+  margin: 30px auto;
+  border: 1px solid #ddd;
+  padding: 2em;
+}
+/* line 163, /vagrant/famliy_plan/app/assets/stylesheets/home.scss */
+.signup-form-container .signup-form, .signup-form-container .login-form, .login-form-container .signup-form, .login-form-container .login-form {
+  width: 100%;
+}
+/* line 166, /vagrant/famliy_plan/app/assets/stylesheets/home.scss */
+.signup-form-container .signup-button, .signup-form-container .login-button, .login-form-container .signup-button, .login-form-container .login-button {
+  padding: 13px;
+  margin-top: 15px;
+  width: 100%;
+}
+
+/* line 174, /vagrant/famliy_plan/app/assets/stylesheets/home.scss */
+.remember-me * {
+  width: auto;
+}
+/* line 177, /vagrant/famliy_plan/app/assets/stylesheets/home.scss */
+.remember-me #remember_me {
+  margin-left: 0;
+}
+
+/* line 182, /vagrant/famliy_plan/app/assets/stylesheets/home.scss */
+.need-signup {
+  float: right;
+}
+
+/* line 186, /vagrant/famliy_plan/app/assets/stylesheets/home.scss */
+.active_table {
+  width: 100%;
+  font-size: 15px;
+  margin-top: 30px;
+  padding: 8px 8px;
+  border-collapse: collapse;
+}
