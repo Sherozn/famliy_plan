@@ -47,6 +47,7 @@ class HomeController < ApplicationController
 	  # 读取疾病信息，然后根据疾病去匹配
 	  @member = nil
 	  arrs = []
+	  hash = {}
 	  sheet.each_row_streaming(offset: 7) do |rows|
 	  	flag_member = rows[0]
 	  	if !flag_member.blank? && flag_member != @member
@@ -55,17 +56,16 @@ class HomeController < ApplicationController
     			Rails.logger.info "===arrs=======#{arrs}====="
     			product_types = ApplicationController.get_product_types(man_income,woman_income,@member.to_s.strip)
     			Rails.logger.info "===product_types=======#{product_types}====="
-    			Note.get_note(arrs,product_types)
+    			notes = Note.get_note(arrs,product_types)
+    			hash[@member.to_s] = notes
+    			Rails.logger.info "====hash=======#{hash}"
     		end
   			arrs = [] 
   			arrs << rows[7].value if rows[7] && rows[7].value
   			@member = flag_member
   		else
   			arrs << rows[7].value if rows[7] && rows[7].value
-  		end	
-  		
-			
-
+  		end
 	  end
   	redirect_to :root
   end

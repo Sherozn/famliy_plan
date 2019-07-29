@@ -1,4 +1,6 @@
 class Insurance < ApplicationRecord
+
+	default_scope { where(status: 0) }
 	# product_type 产品类型    1寿险  2重疾险  3医疗险  4意外险
 	# platform 平台 0齐欣  1小雨伞 2微信 3支付宝  4其他
 
