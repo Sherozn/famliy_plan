@@ -5,9 +5,9 @@
     <%= csrf_meta_tags %>
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 		<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-		<link rel="stylesheet" href="/assets/bootstrap.css" id="bscss">
+
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag "application","vendor/jquery.anystretch.min", "common", 'data-turbolinks-track': 'reload'%>
+    <%= javascript_include_tag "application","vendor/jquery.anystretch.min", 'data-turbolinks-track': 'reload'%>
   </head>
 
   <body>
@@ -22,8 +22,24 @@
 		</div>
     <%= yield %>
 
-    <script src="/assets/app.js"></script>
     <script>
+    	$(function(){
+				<% unless flash[:notice].blank? %>
+				<% if flash[:notice] == "已成功删除！" %>
+				swal({
+					title: "<%= flash[:notice] %>",
+					type: "success",
+					confirmButtonText: "确定"
+				}); 	
+				<% else %>
+				swal({
+					title : "<%= flash[:notice] %>",
+					confirmButtonText : "确定"
+				});
+				<% end %>
+				<% flash[:notice] = nil %>
+				<% end %>
+			})
 	  	$('.home-banner').anystretch();
 
 	    var hideNotice = function(){

@@ -19,6 +19,7 @@ class HomeController < ApplicationController
   end
 
   def create_information
+  	ori_file = params[:file].original_filename
 	  xlsx = Roo::Spreadsheet.open(params[:file])
 	  sheet = xlsx.sheet(0)
 	  # 月开支
@@ -58,7 +59,7 @@ class HomeController < ApplicationController
     			Rails.logger.info "===product_types=======#{product_types}====="
     			notes_arr = Note.get_note(arrs,product_types)
     			hash[[@member.to_s,notes_arr[1]]] = notes_arr[0]
-    			Rails.logger.info "====hash=======#{hash}"
+    			
     		end
   			arrs = [] 
   			arrs << rows[7].value if rows[7] && rows[7].value
@@ -68,15 +69,30 @@ class HomeController < ApplicationController
   		end
 	  end
 	  @hash = hash
+	  file = File.open("#{Rails.root}/public/file/#{ori_file}.txt","w")
+	  Rails.logger.info "====hash=======#{hash}"
+		file.write(hash)
+		file.close
   	# redirect_to "/show_information"
   end
 
   def new_note
   	@ins_id = params[:ins_id]
+  	@ins = Insurance.find(@ins_id)
   	@name = params[:name]
   	@note = Note.new(insurance_id:@ins_id,name:@name)
   end
 
   def create_note
+  	insurance_id = params[:note][:insurance_id]
+  	name = params[:note][:name]
+  	note = params[:note][:note]
+  	rank = params[:rank]
+  	@note = Note.find_or_create_by(insurance_id:insurance_id,name:name)
+  	@note.rank = rank
+  	@note.note = note
+  	@note.save
+
+  	redirect_to "/new_note/#{params[:note][:insurance_id]}/#{params[:note][:name]}" , notice: "添加成功"
   end
 end

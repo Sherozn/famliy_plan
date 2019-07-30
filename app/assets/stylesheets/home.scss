@@ -190,3 +190,27 @@ article {
   padding: 8px 8px;
   border-collapse: collapse;
 }
+
+.modal-content{
+  width: 50%;
+  margin-top: 50px;
+  padding: 50px 50px;
+  border: 1px solid #eee;
+  margin:0 auto;
+}
+
+.form-control{
+  width: 50%;
+  height: 35px;
+  margin-top: 10px;
+}
+
+h2 {
+  color: #f5999d;
+}
+.text-area{
+  width: 50%;
+  height: 80px;
+  font-size: 14px;
+  margin-top: 10px;
+}

@@ -1,0 +1,34 @@
+<div class="modal-content">
+    <%= form_for @note,url: "/create_note", authenticity_token: true, html:{class: "form-horizontal",id: "pop_form" , multipart: true} do |f| %>
+      <h2>添加备注信息</h2>
+      <h4>疾病名称：<%= @note.name %></h4>
+      <h4>保险名称：<%= @ins.name %></h4>
+      <h4>核保结果：<br>
+        <select name="rank" class="form-control">
+          <option value= "1">标准体承保</option>
+          <option value= "2">除外承保</option>
+          <option value= "3">加费承保</option>
+          <option value= "5">转人工核保</option>
+          <option value= "6">拒保</option>
+          <option value= "7">待确认</option>
+        </select>
+        
+      </h4>
+      <h4>备注：<br>
+        <%=f.text_area :note,class: "text-area"%>
+      </h4>
+      <div>
+        <%= f.hidden_field :name %>
+        <%= f.hidden_field :insurance_id %>
+        <%=f.submit "提交",class: "btn btn-primary form-control"%>
+         <!-- <button type="submit" class="btn btn-primary" >提交</button> -->
+      </div>
+    <% end %> 
+</div>
+
+<script type="text/javascript">
+   function cencel(){
+      $('#myModal').remove();
+      $('.modal-backdrop').remove();
+    }
+</script>

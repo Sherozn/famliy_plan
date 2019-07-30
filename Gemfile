@@ -30,6 +30,8 @@ gem 'jbuilder', '~> 2.5'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
+gem 'jquery-ui-rails'
+
 # 解析表格文件
 gem 'roo'
 gem 'roo-xls'
