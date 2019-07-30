@@ -7,9 +7,12 @@ Created on Mon Sep 03 18:28:56 2018
          2.0 处理xml命名空间；对返回的xml做过滤，只保存<return>tag的text
 """
 import xlwt
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 class QueryResult:
-    def __init__(self):
+    def __init__(self,hash):
         # style = xlwt.XFStyle()#格式信息
         # font = xlwt.Font()#字体基本设置
         # font.name = u'微软雅黑'
@@ -52,8 +55,9 @@ class QueryResult:
 
             
 if __name__=='__main__':
-
-    gquery=QueryResult()
+    hash = sys.argv[1]
+    print(hash);
+    gquery=QueryResult(hash)
     print(gquery)
     #保存结果
     # f=open("wsResult1.txt","w")
