@@ -15,14 +15,14 @@ class HomeController < ApplicationController
   # array = (%x{cd lib/python/ && python make_excel.py})
   # array = (%x{cd lib/python/ && python gf_api.py "#{appKey}" "#{userID}" "#{indexName}"})
   def derive
-  	name = `ls public/file | grep "家庭"`
+  	name = `ls public/file | grep "未确认"`
   	path = "#{Rails.root}/public/file/#{name.strip}"
   	Rails.logger.info "===path===#{path}"
 		file = File.open(path)
-		data = file.read
-  	hash = eval(data)
+		data = file.read.to_s.gsub("=>",":").gsub("[","(").gsub("]",")").gsub(" ","").gsub("先生","1").gsub("甲状腺结节3级","2")
+		Rails.logger.info "==data=========#{data}"
   	file.close
-  	array = (%x{cd lib/python/ && python make_excel.py "#{hash}"})
+  	array = (%x{cd lib/python/ && python make_excel.py "#{data}"})
 
 
   	 #  	path = receive_email.email_path

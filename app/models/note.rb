@@ -23,7 +23,7 @@ class Note < ApplicationRecord
 				else 
 					id = 15
 				end
-				notes[[4,1,1]] = {[id,1,1]=>[["",1]]}
+				notes[[4,1,1]] = {[id,1,1]=>[["1",1]]}
 				break
 			end
 			row2 = 0
