@@ -22,7 +22,7 @@ class HomeController < ApplicationController
 		data = file.read.to_s.gsub("=>",":").gsub("[","(").gsub("]",")").gsub(" ","").gsub("先生","1").gsub("甲状腺结节3级","2")
 		Rails.logger.info "==data=========#{data}"
   	file.close
-  	array = (%x{cd lib/python/ && python make_excel.py "#{data}"})
+  	array = (%x{cd lib/python/ && python make_excel.py})
 
 
   	 #  	path = receive_email.email_path
@@ -66,18 +66,19 @@ class HomeController < ApplicationController
 	  birth = nil
 	  arrs = []
 	  hash = {}
+	  # flag = 0
 	  sheet.each_row_streaming(offset: 7) do |rows|
 	  	flag_member = rows[0]
 	  	
 	  	if !flag_member.blank? 
-
 	  		if flag_member != @member
-		  		if !arrs.blank?  
+		  		if @member
+		  			Rails.logger.info "=====@member===#{@member}"
+	  				Rails.logger.info "=====@arrs===#{arrs}"
 	    			product_types = ApplicationController.get_product_types(man_income,woman_income,@member.to_s.strip)
-	    			Rails.logger.info "=====@member===#{@member}"
+	    			# Rails.logger.info "=====@member===#{@member}"
 			  		age = ApplicationController.get_age(birth)
 			  		Rails.logger.info "===age======#{age}====="
-	    			# Rails.logger.info "===product_types=======#{product_types}====="
 	    			notes_arr = Note.get_note(arrs,product_types,age)
 	    			hash[[@member.to_s,notes_arr[1]]] = notes_arr[0]
 	    		end

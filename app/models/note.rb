@@ -14,6 +14,7 @@ class Note < ApplicationRecord
 		notes = {}
 		row = 0
 		product_types.each do |product_type|
+
 			if product_type == 4
 				row += 1
 				if age > 17
@@ -23,7 +24,7 @@ class Note < ApplicationRecord
 				else 
 					id = 15
 				end
-				notes[[4,1,1]] = {[id,1,1]=>[["1",1]]}
+				notes[[4,1,1]] = {[id,1,1]=>[["意外险可以直接投保",1]]}
 				break
 			end
 			row2 = 0
@@ -39,21 +40,28 @@ class Note < ApplicationRecord
 				min_rank = 7
 				max_rank = 0
 				jubao_arr = []
-				#遍历所有的疾病
-				arrs.each do |arr|
-					note = Note.find_by(insurance_id:ins.id,name:arr)
-					if note
-						ins_arr << [arr,note.rank] 
-						min_rank = note.rank if note.rank < min_rank
-						max_rank = note.rank if note.rank > max_rank
-					else
-						#所有疾病的集合
-						ins_arr << [arr,7]
-						max_rank = 7
+				if arrs.blank?
+					max_inx = 1
+					insurances[[ins.id,max_inx,1]] = [["可以直接投保",1]]
+					row += 1
+					break
+				else
+					#遍历所有的疾病
+					arrs.each do |arr|
+						note = Note.find_by(insurance_id:ins.id,name:arr)
+						if note
+							ins_arr << [arr,note.rank] 
+							min_rank = note.rank if note.rank < min_rank
+							max_rank = note.rank if note.rank > max_rank
+						else
+							#所有疾病的集合
+							ins_arr << [arr,7]
+							max_rank = 7
+						end
+						jubao_arr << max_rank
 					end
-					jubao_arr << max_rank
 				end
-				# 当前假设都是确认的，然后，有两个疾病，一个拒保一个标准体承保，下一个保险，一个除外承保一个除外承保
+				
 				#如果当前疾病的核保结果为标准体承保，则跳出当前寿险的循环
 				if max_rank == 1
 					max_inx = 1

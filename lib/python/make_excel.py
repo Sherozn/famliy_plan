@@ -50,7 +50,7 @@ class QueryResult:
             sum_fee = 0.0
             for i,items in enumerate(value):
                 for index,item in enumerate(items):
-                    print(item)
+                    # print(item)
                     if(index == 6):
                         sum_fee += float(item)
                     if(index == 0):
@@ -61,11 +61,12 @@ class QueryResult:
             row += len(value)
                     
         ws.write_merge(0, 0, 0, 9, u'家庭保障清单', style0)
-        wb.save('/vagrant/famliy_plan/public/test.xlsx')
+        path = "/vagrant/famliy_plan/public/test.xlsx"
+        wb.save(path)
+        return path
 
             
 if __name__=='__main__':
     f = open("/vagrant/famliy_plan/public/保险信息.txt","r")
     fr = f.read()
-    print(fr)
     gquery=QueryResult(fr)
