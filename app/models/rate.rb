@@ -9,12 +9,36 @@ class Rate < ApplicationRecord
 	# age
 
 	# rails g model Rate insurance_id:integer group:string  year:integer jf_year:integer rate:float age:integer sex:integer status:integer
-  # 超级玛丽旗舰版
+    def self.get_rate(product_type,ins_id,fee,age,sex,sum_amount)
+      if sex == "男"
+        sex_num = 0
+      elsif sex == "女"
+        sex_num = 1
+      end  
+      jf = 0.0 
+      if product_type == 1
+        rate = Rate.where(insurance_id:ins_id,age:age,sex:sex_num,year:60).order(:jf_year).last
+        if rate
+          jf = fee * 10000 * rate.rate
+          rate_fj = Rate.where(insurance_id:ins_id,age:age,sex:sex_num,year:0).order(:jf_year).last.rate
+          jf_fj = jf/1000 * rate_fj
+          jf_sum = jf_fj + jf
+        end
+      elsif product_type == 2
+        rate = Rate.where(insurance_id:ins_id,age:age,sex:sex_num).order(:jf_year).last
+      elsif product_type == 3
+        rate = Rate.where(insurance_id:ins_id,age:age,sex:sex_num).order(:jf_year).last
+      elsif product_type == 4
+        rate = 
+      end
+    end
+
+    # 超级玛丽旗舰版
 	def self.import_rate_1
 		path = "/vagrant/famliy_plan/public/超级玛丽旗舰版费率表.xlsx"
-  	xls = Roo::Excelx.new path
-  	sheet = xls.sheet(0)
-    sheet.each_with_index do |arr, j|
+  	    xls = Roo::Excelx.new path
+  	    sheet = xls.sheet(0)
+        sheet.each_with_index do |arr, j|
     	if j == 0
     		next
     	end

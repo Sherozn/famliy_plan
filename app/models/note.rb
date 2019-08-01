@@ -13,6 +13,7 @@ class Note < ApplicationRecord
 	def self.get_note(arrs,product_types,age)
 		notes = {}
 		row = 0
+		id = nil
 		product_types.each do |product_type|
 
 			if product_type == 4
