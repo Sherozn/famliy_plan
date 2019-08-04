@@ -10,27 +10,65 @@ class Rate < ApplicationRecord
 
 	# rails g model Rate insurance_id:integer group:string  year:integer jf_year:integer rate:float age:integer sex:integer status:integer
     def self.get_rate(product_type,ins_id,fee,age,sex,sum_amount)
+        Rails.logger.info "===age   #{age}=======sex   #{sex}==="
       if sex == "男"
         sex_num = 0
       elsif sex == "女"
         sex_num = 1
       end  
-      jf = 0.0 
+      jf_sum = 0.0
+      jf_year = 0
+      year15 = 0
       if product_type == 1
         rate = Rate.where(insurance_id:ins_id,age:age,sex:sex_num,year:60).order(:jf_year).last
         if rate
-          jf = fee * 10000 * rate.rate
+          jf = fee * 10000/1000 * rate.rate
+          jf_year = rate.jf_year
           rate_fj = Rate.where(insurance_id:ins_id,age:age,sex:sex_num,year:0).order(:jf_year).last.rate
           jf_fj = jf/1000 * rate_fj
           jf_sum = jf_fj + jf
         end
       elsif product_type == 2
-        rate = Rate.where(insurance_id:ins_id,age:age,sex:sex_num).order(:jf_year).last
+        if ins_id == 16
+            [15,20,25,30].each do |year|
+                if age+year >= 30
+                    Rails.logger.info "===year=======#{year}"
+                    rate = Rate.where(insurance_id:ins_id,age:age,sex:sex_num,year:year,group: [0, 1, 2]).order(:jf_year).last
+                    year15 = year
+                    if rate
+                        Rails.logger.info "===rate=======#{rate.id}"
+                        jf_sum = fee * 10000/1000 * rate.rate
+                        jf_year = rate.jf_year
+                    end
+                    rate_fj_obj = Rate.where(insurance_id:ins_id,age:age,sex:sex_num,year:0,group: [6]).order(:jf_year).last
+                    if rate_fj_obj
+                      jf_sum = jf_sum + jf_sum/1000 * rate_fj_obj.rate
+                    end
+                    break
+                end
+            end
+        end
+        # low_fee = sum_amount*0.03/1000
+        rate = Rate.where(insurance_id:ins_id,age:age,sex:sex_num,year:70,group: [0, 1, 2]).order(:jf_year).last
+        if rate
+          jf_sum = fee * 10000/1000 * rate.rate
+          jf_year = rate.jf_year
+        end
       elsif product_type == 3
-        rate = Rate.where(insurance_id:ins_id,age:age,sex:sex_num).order(:jf_year).last
+        rate = Rate.where(insurance_id:ins_id,age:age).last
+        if rate
+          jf_sum = rate.rate
+          jf_year = 6
+        end
       elsif product_type == 4
-        rate = 
+        rate = Rate.where(insurance_id:ins_id).last
+        if rate
+          jf_sum = rate.rate
+          jf_year = 1
+        end
       end
+      Rails.logger.info "===year15=======#{year15}"
+      [jf_year,jf_sum,year15]
     end
 
     # 超级玛丽旗舰版
@@ -138,6 +176,73 @@ class Rate < ApplicationRecord
     end
 	end
 
+    # 晴天保保
+    # Rate.import_rate_16
+    def self.import_rate_16
+        path = "/vagrant/famliy_plan/public/晴天保保费率表.xlsx"
+        xls = Roo::Excelx.new path
+        sheet = xls.sheet(0)
+        group = nil
+        year = nil
+        sex = nil
+        jf_year = nil
+        sheet.each_with_index do |arr, j|
+            # Rails.logger.info "==arr[0]===#{arr[0]}="
+            if arr[0].to_s =~ /\d{1,2}/
+                age = arr[0].to_i
+                [3,4,5,6,7,8,9,10,11,12].each do |i|
+                    if i%2 == 0
+                        sex = 1
+                    else
+                        sex = 0
+                    end
+                    if i == 3
+                        jf_year = 3
+                    elsif i == 5
+                        jf_year = 5
+                    elsif i == 7
+                        jf_year = 10
+                    elsif i == 9
+                        jf_year = 15
+                    elsif i == 11
+                        jf_year = 20
+                    end
+                    rate = arr[i]
+                    # Rails.logger.info "==rate===#{rate}"
+                    if !rate.blank?
+                        if year == 0
+                            rate = rate
+                        else
+                            rate = "%.2f" % (rate.to_f/10)
+                        end
+                        Rails.logger.info "==jf_year=#{jf_year}======age=#{age}=======rate=#{rate}======sex=#{sex}======year=#{year}"
+                        Rate.find_or_create_by(insurance_id:16,jf_year:jf_year,sex:sex,age:age,year:year,group:group,rate:rate)
+                    end
+                end
+            else
+                [2,3,4].each do |ii|
+                    # Rails.logger.info "=iiiiiiii#{ii}==arr[ii]=========#{arr[ii]}"
+                    if arr[ii].to_s.strip == "15年" 
+                        group = [0,1,2]
+                        year = 15
+                    elsif arr[ii].to_s.strip == "20年" 
+                        group = [0,1,2]
+                        year = 20
+                    elsif arr[ii].to_s.strip == "25年" 
+                        group = [0,1,2]
+                        year = 25
+                    elsif arr[ii].to_s.strip == "30年" 
+                        group = [0,1,2]
+                        year = 30
+                    elsif arr[ii].to_s.strip.include?("瑞泰附加投保人豁免重大疾病保险产品费率表")
+                        group = [6]
+                        year = 0
+                    end
+                end
+            end
+        end
+    end
+
 	# 好医保长期医疗、微医保长期医疗
 	def self.import_rate_3
 		hash_1 = {[0,1,2,3,4]=> 568,(5..10)=>166,(11..15)=>106,(16..20)=>108,
@@ -161,7 +266,7 @@ class Rate < ApplicationRecord
 	# 擎天柱3号
 	# Rate.import_rate_6
 	def self.import_rate_6
-		path = "/vagrant/famliy_plan/public/擎天柱3号费率表.xlsx"
+	path = "/vagrant/famliy_plan/public/擎天柱3号费率表.xlsx"
   	xls = Roo::Excelx.new path
   	sheet = xls.sheet(0)
   	group = [0]

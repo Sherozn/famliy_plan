@@ -34,6 +34,15 @@ class Note < ApplicationRecord
 			#某个保险关于某疾病的最优核保结果
 			max_inx = 7
 			insurances_arr = Insurance.where(product_type:product_type).order(rank: :desc)
+			if age < 15 && product_type == 2
+				insurances_arr = Insurance.where(id:[16]).order(rank: :desc)
+			end
+			if age > 60 && age <=65 
+				insurances_arr = Insurance.where(id:[17]).order(rank: :desc)
+			end
+			if age > 50 && (product_type == 3 || product_type == 1)
+				insurances_arr = []
+			end
 			#查找出所有寿险的集合，遍历每个寿险
 			insurances_arr.each do |ins|
 				row3 = 0
@@ -43,7 +52,7 @@ class Note < ApplicationRecord
 				jubao_arr = []
 				if arrs.blank?
 					max_inx = 1
-					insurances[[ins.id,max_inx,1]] = [["可以直接投保",1]]
+					insurances[[ins.id,max_inx,1]] = [["可以直接投保",1,""]]
 					row += 1
 					break
 				else
@@ -51,12 +60,12 @@ class Note < ApplicationRecord
 					arrs.each do |arr|
 						note = Note.find_by(insurance_id:ins.id,name:arr)
 						if note
-							ins_arr << [arr,note.rank] 
+							ins_arr << [arr,note.rank,note.note] 
 							min_rank = note.rank if note.rank < min_rank
 							max_rank = note.rank if note.rank > max_rank
 						else
 							#所有疾病的集合
-							ins_arr << [arr,7]
+							ins_arr << [arr,7,""]
 							max_rank = 7
 						end
 						jubao_arr << max_rank
