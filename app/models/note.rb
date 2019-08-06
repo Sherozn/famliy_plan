@@ -1,5 +1,5 @@
 class Note < ApplicationRecord
-	# rank 等级  
+	# rank 等级  1是标准体承保 2是除外承保 3是加费承保 4是不确定，需要检查项目之后确认再投保 5是转人工核保 6是拒保
 
 	# arrs是疾病的集合
 	# product_types是险种的集合
@@ -37,10 +37,14 @@ class Note < ApplicationRecord
 			if age < 15 && product_type == 2
 				insurances_arr = Insurance.where(id:[16]).order(rank: :desc)
 			end
-			if age > 60 && age <=65 
-				insurances_arr = Insurance.where(id:[17]).order(rank: :desc)
+			if age > 60
+				if age <=65 
+				  insurances_arr = Insurance.where(id:[17,18]).order(rank: :desc)
+				elsif age <= 70
+					insurances_arr = Insurance.where(id:[17]).order(rank: :desc)
+				end
 			end
-			if age > 50 && (product_type == 3 || product_type == 1)
+			if age > 50 && (product_type == 2 || product_type == 1)
 				insurances_arr = []
 			end
 			#查找出所有寿险的集合，遍历每个寿险

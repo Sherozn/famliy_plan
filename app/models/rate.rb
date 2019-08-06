@@ -58,7 +58,11 @@ class Rate < ApplicationRecord
         rate = Rate.where(insurance_id:ins_id,age:age).last
         if rate
           jf_sum = rate.rate
-          jf_year = 6
+        end
+        if ins_id == 3 || ins_id == 5
+            jf_year = 6
+        else
+            jf_year = 1
         end
       elsif product_type == 4
         rate = Rate.where(insurance_id:ins_id).last
@@ -262,6 +266,19 @@ class Rate < ApplicationRecord
 			rate = Rate.find_or_create_by(insurance_id:5,group: [7],year: 1,jf_year: 1,rate:arr_1[index],age:age,status:0)
 		end
 	end
+
+    #安心安享一生
+    def self.import_rate_17
+        hash_1 = {(0..6)=> 250,(7..20)=>50,(21..25)=>99,(26..30)=>125,
+            (31..35)=>165,(36..40)=>205,(41..45)=>244,(46..50)=>333,(51..55)=>410,
+            (56..60)=>471,(61..65)=>617,(66..70)=>911}
+        hash_1.each do |key,value|
+            key.each do |age|
+                Rails.logger.info "======age====#{age}"
+                rate = Rate.find_or_create_by(insurance_id:17,year: 1,jf_year: 1,rate:value,age:age,status:0)
+            end
+        end
+    end
 
 	# 擎天柱3号
 	# Rate.import_rate_6

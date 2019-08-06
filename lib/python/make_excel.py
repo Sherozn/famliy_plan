@@ -15,7 +15,7 @@ class QueryResult:
     def __init__(self,data):
         # style0 = xlwt.easyxf('alignment: horz center,vert center;font: name 宋体, color-index black,bold on,height 280;pattern: pattern solid, fore_colour dark_green_ega;align: wrap on; ')
         wb = xlwt.Workbook()
-        ws = wb.add_sheet('sheet1')
+        ws = wb.add_sheet('3、家庭保障规划')
         ws.col(0).width=256*12 
         ws.col(1).width=256*10
         ws.col(2).width=256*18
