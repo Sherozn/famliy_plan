@@ -53,6 +53,12 @@ class Rate < ApplicationRecord
         if rate
           jf_sum = fee * 10000/1000 * rate.rate
           jf_year = rate.jf_year
+          if ins_id == 2
+            rate_fj = Rate.where(insurance_id:ins_id,age:age,sex:sex_num,year:0,jf_year:jf_year).order(:jf_year).last.rate
+            jf_fj = jf_sum/1000 * rate_fj
+            jf_sum = jf_fj + jf_sum
+          end
+          
         end
       elsif product_type == 3
         rate = Rate.where(insurance_id:ins_id,age:age).last

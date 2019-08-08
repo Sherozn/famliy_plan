@@ -37,16 +37,17 @@ class Note < ApplicationRecord
 			if age < 15 && product_type == 2
 				insurances_arr = Insurance.where(id:[16]).order(rank: :desc)
 			end
-			if age > 60
+			if age > 50 && (product_type == 2 || product_type == 1)
+				insurances_arr = []
+			end
+			if age > 60 && product_type == 3
 				if age <=65 
 				  insurances_arr = Insurance.where(id:[17,18]).order(rank: :desc)
 				elsif age <= 70
 					insurances_arr = Insurance.where(id:[17]).order(rank: :desc)
 				end
 			end
-			if age > 50 && (product_type == 2 || product_type == 1)
-				insurances_arr = []
-			end
+			
 			#查找出所有寿险的集合，遍历每个寿险
 			insurances_arr.each do |ins|
 				row3 = 0
