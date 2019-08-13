@@ -110,14 +110,18 @@ class HomeController < ApplicationController
 		  			if product_type[0] == 1 && col1[0] == "先生"
 		  				a = man_income/(man_income+woman_income)*amount
 		  				fee = ("%.1f" % (a/100)).to_f * 100
-		  				if fee > 0
+		  				if fee > 300
+		  					fee = 300
+		  				elsif fee > 0
 		  					fee = fee
 		  				end
 		  				year = 60
 		  			elsif product_type[0] == 1 && col1[0] == "太太"
 		  				a = woman_income/(man_income+woman_income)*amount
 		  				fee = ("%.1f" % (a/100)).to_f * 100
-		  				if fee > 0
+		  				if fee > 300
+		  					fee = 300
+		  				elsif fee > 0
 		  					fee = fee
 		  				end
 		  				year = 60

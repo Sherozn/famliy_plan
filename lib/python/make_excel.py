@@ -7,7 +7,8 @@ Created on Mon Sep 03 18:28:56 2018
          2.0 处理xml命名空间；对返回的xml做过滤，只保存<return>tag的text
 """
 import xlwt
-import sys
+import os, sys
+from PIL import Image
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
@@ -25,7 +26,14 @@ class QueryResult:
         ws.col(6).width=256*36
         ws.col(7).width=256*12
         ws.col(8).width=256*13
-        ws.col(9).width=256*20
+        ws.col(9).width=256*25
+
+        # s = "123"
+        # im = Image.open('%s' % os.path.join(os.getcwd(), 'index.jpg')).convert("RGB")
+        # im.save('gaitubao_123_bmp.bmp')
+        # ws.write(2,9,u'=H3+H4')
+
+
         xlwt.add_palette_colour("colour0", 0x21)
         wb.set_colour_RGB(0x21, 33, 27, 14)
         xlwt.add_palette_colour("colour1", 13)
@@ -47,6 +55,7 @@ class QueryResult:
         row = 2
         exec("data="+data)
         sum = 0.0
+        nn = u"\n\n\n\n\n\n\n\n"
         for (member,value) in data.items():
             ws.write_merge(row, row+len(value)-1, 0, 0, unicode(str(member), 'utf-8'), style2)
             sum_fee = 0.0
@@ -61,15 +70,20 @@ class QueryResult:
                         ws.write(row+i,index+1,unicode(str(item), 'utf-8'),style5)
                     else:
                         ws.write(row+i,index+1,unicode(str(item), 'utf-8'),style4)
+                ws.write(row+i, 10, nn)
             sum += sum_fee
+            
+            # nn = u"你好"
             ws.write_merge(row, row+len(value)-1, 8, 8, unicode(str(sum_fee), 'utf-8'), style3)
+            
             ws.write_merge(row+len(value), row+len(value), 0, 9, u'', style1)
             row += 1
             row += len(value)
                     
         ws.write_merge(0, 0, 0, 9, u'家庭保障清单', style0)
         ws.write(row,0,u'合计',style0)
-        for index in [1,2,3,4,5,6]:
+
+        for index in [1,2,3,4,5,6,9]:
             ws.write(row,index,u'',style0)
         ws.write_merge(row,row,7,8,unicode(str(sum), 'utf-8'),style0)
         path = "/vagrant/famliy_plan/public/test.xlsx"
