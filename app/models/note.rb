@@ -15,10 +15,10 @@ class Note < ApplicationRecord
 		row = 0
 		id = nil
 		product_types.each do |product_type|
-
+			Rails.logger.info "=====age product_type===========#{age}==="
 			if product_type == 4
 				row += 1
-				if age > 17
+				if age > 17 && age <= 60
 					id = 4
 				elsif age > 60 && age <= 85
 					id = 14
@@ -28,6 +28,7 @@ class Note < ApplicationRecord
 				notes[[4,1,1]] = {[id,1,1]=>[["意外险可以直接投保",1]]}
 				break
 			end
+			Rails.logger.info "=====notes product_type===========#{notes}==="
 			row2 = 0
 			insurances = {}
 			min_ins = 7
@@ -40,11 +41,16 @@ class Note < ApplicationRecord
 			if age > 50 && (product_type == 2 || product_type == 1)
 				insurances_arr = []
 			end
+			if age > 40 && product_type == 1
+				insurances_arr = insurances_arr.where.not(id:20)
+			end
 			if age > 60 && product_type == 3
 				if age <=65 
 				  insurances_arr = Insurance.where(id:[17,18]).order(rank: :desc)
 				elsif age <= 70
-					insurances_arr = Insurance.where(id:[17]).order(rank: :desc)
+					insurances_arr = Insurance.where(id:[17])
+				else 
+					insurances_arr = Insurance.where(id:[])
 				end
 			end
 			

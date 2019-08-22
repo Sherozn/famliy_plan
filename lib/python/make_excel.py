@@ -55,7 +55,7 @@ class QueryResult:
         row = 2
         exec("data="+data)
         sum = 0.0
-        nn = u"\n\n\n\n\n\n\n\n"
+        nn = u"\n\n\n\n\n\n\n\n\n"
         for (member,value) in data.items():
             ws.write_merge(row, row+len(value)-1, 0, 0, unicode(str(member), 'utf-8'), style2)
             sum_fee = 0.0

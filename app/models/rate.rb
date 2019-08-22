@@ -24,9 +24,13 @@ class Rate < ApplicationRecord
         if rate
           jf = fee * 10000/1000 * rate.rate
           jf_year = rate.jf_year
-          rate_fj = Rate.where(insurance_id:ins_id,age:age,sex:sex_num,year:0,jf_year:jf_year).last.rate
-          jf_fj = jf/1000 * rate_fj
-          jf_sum = jf_fj + jf
+          rate_fj = Rate.where(insurance_id:ins_id,age:age,sex:sex_num,year:0,jf_year:jf_year).last
+          if rate_fj
+            jf_fj = jf/1000 * rate_fj.rate
+            jf_sum = jf_fj + jf
+          else
+            jf_sum = jf
+          end
         end
       elsif product_type == 2
         if ins_id == 16
@@ -286,6 +290,17 @@ class Rate < ApplicationRecord
         end
     end
 
+    #国泰父母综合意外
+    def self.import_rate_14
+        hash_1 = {(66..75)=> 188,(76..80)=>400,(81..85)=>500}
+        hash_1.each do |key,value|
+            key.each do |age|
+                Rails.logger.info "======age====#{age}"
+                rate = Rate.find_or_create_by(insurance_id:14,year: 1,jf_year: 1,rate:value,age:age,status:0)
+            end
+        end
+    end
+
 	# 擎天柱3号
 	# Rate.import_rate_6
 	def self.import_rate_6
@@ -353,9 +368,9 @@ class Rate < ApplicationRecord
 	# 擎天柱3号附加豁免
 	# Rate.import_rate_7
 	def self.import_rate_7
-		path = "/vagrant/famliy_plan/public/擎天柱3号附加豁免费率表.xls"
-  	xls = Roo::Excel.new path
-  	[0,1].each do |sex|
+	  path = "/vagrant/famliy_plan/public/擎天柱3号附加豁免费率表.xls"
+  	  xls = Roo::Excel.new path
+  	  [0,1].each do |sex|
 	  	sheet = xls.sheet(sex)
 	  	group = [6]
 	    year = 0
@@ -375,4 +390,27 @@ class Rate < ApplicationRecord
 	    end
 	  end
 	end
+
+    # 大麦正青春
+    def self.import_rate_20
+        arr = [[18,30,0,0.73],[19,30,0,0.74],[20,30,0,0.76],[21,30,0,0.77],[22,30,0,0.79],
+        [23,30,0,0.80],[24,30,0,0.81],[25,30,0,0.83],[26,30,0,0.84],[27,30,0,0.86],
+        [28,30,0,0.87],[29,30,0,0.89],[30,30,0,0.90],[31,20,0,1.35],[32,20,0,1.37],
+        [33,20,0,1.39],[34,20,0,1.41],[35,20,0,1.43],[36,20,0,1.44],[37,20,0,1.46],
+        [38,20,0,1.47],[39,20,0,1.48],[40,20,0,1.49],
+        [18,30,1,0.38],[19,30,1,0.39],[20,30,1,0.40],[21,30,1,0.41],[22,30,1,0.42],
+        [23,30,1,0.42],[24,30,1,0.43],[25,30,1,0.44],[26,30,1,0.45],[27,30,1,0.46],
+        [28,30,1,0.47],[29,30,1,0.48],[30,30,1,0.49],[31,20,1,0.73],[32,20,1,0.74],
+        [33,20,1,0.76],[34,20,1,0.77],[35,20,1,0.78],[36,20,1,0.79],[37,20,1,0.80],
+        [38,20,1,0.81],[39,20,1,0.82],[40,20,1,0.83]]
+        arr.each do |key|
+            age = key[0]
+            jf_year = key[1]
+            sex = key[2]
+            ra = key[3]
+            rate = Rate.find_or_create_by(insurance_id:20,year: 60,status:0,jf_year: jf_year,age:age,sex:sex)
+            rate.rate = ra
+            rate.save
+        end
+    end
 end
