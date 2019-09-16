@@ -1,8 +1,12 @@
 class HomeController < ApplicationController
   def index
   	path = "/vagrant/famliy_plan/public/家庭保障方案.xlsx"
-  	xls = Roo::Excelx.new path
-  	sheet = xls.sheet(2)
+  	begin
+	  	xls = Roo::Excelx.new path
+	  rescue
+	  	xls = Roo::Excel.new unzip_file
+	  end
+	  sheet = xls.sheet(2)
     sheet.each_with_index do |arr, j|
     	if j==2
     		sheet.row(j)[6] = "你好"
@@ -17,7 +21,7 @@ class HomeController < ApplicationController
   def derive
   	array = (%x{cd lib/python/ && python make_excel.py})
 
-  	path = "/vagrant/famliy_plan/public/test.xlsx"
+  	path = "/vagrant/famliy_plan/public/1力哥理财家庭保障规划.xlsx"
     send_file path, :type=>"application/octet-stream;charset=utf-8", :filename => CGI::escape("家庭保障规划方案.xlsx"), :x_sendfile=>true
   end
 
@@ -27,8 +31,14 @@ class HomeController < ApplicationController
 
   def create_information
   	ori_file = params[:file].original_filename
-	  xlsx = Roo::Spreadsheet.open(params[:file])
-	  sheet = xlsx.sheet(0)
+  	begin
+	    xlsx = Roo::Spreadsheet.open(params[:file])
+	    sheet = xlsx.sheet(0)
+	  rescue
+	  	xlsx = Spreadsheet.open(params[:file])
+	  	sheet = xlsx.worksheet(0)
+	  end
+	  
 	  # 月开支
 	  month_expenses = sheet.row(2)[5].to_f
 	  # 房贷
@@ -59,9 +69,12 @@ class HomeController < ApplicationController
 	  arrs = []
 	  hash = {}
 	  # flag = 0
-	  sheet.each_row_streaming(offset: 7) do |rows|
+	  sheet.each_with_index do |rows,index|
 	  	# Rails.logger.info "=====@rows===#{rows[3].to_s}"
 	  	# Rails.logger.info "===rows======#{rows[2].to_s}====="
+	  	if index < 7
+	  		next
+	  	end
 	  	flag_member = rows[0]
 
 	  	
@@ -81,13 +94,13 @@ class HomeController < ApplicationController
 	    			hash[[@member.to_s,notes_arr[1],age,sex]] = notes_arr[0]
 	    		end
 	  			arrs = [] 
-	  			arrs << rows[7].value if rows[7] && rows[7].value
+	  			arrs << rows[7] if rows[7]
 	  			@member = flag_member
 	  			birth = rows[3].to_s
 	  			sex = rows[2].to_s
 	  		end
   		else
-  			arrs << rows[7].value if rows[7] && rows[7].value
+  			arrs << rows[7] if rows[7]
   		end
 	  end
 	  @hash = hash

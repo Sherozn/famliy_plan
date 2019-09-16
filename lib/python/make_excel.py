@@ -86,7 +86,7 @@ class QueryResult:
         for index in [1,2,3,4,5,6,9]:
             ws.write(row,index,u'',style0)
         ws.write_merge(row,row,7,8,unicode(str(sum), 'utf-8'),style0)
-        path = "/vagrant/famliy_plan/public/test.xlsx"
+        path = "/vagrant/famliy_plan/public/1力哥理财家庭保障规划.xlsx"
         wb.save(path)
 
             
