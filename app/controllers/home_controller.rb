@@ -142,7 +142,11 @@ class HomeController < ApplicationController
 		  				fee = 50
 		  				year = 70
 		  			elsif product_type[0] == 3
-		  				fee = 200
+		  				if id_rank[0]==18
+		  					fee = 300
+		  				else
+		  					fee = 200
+		  				end
 		  				if id_rank[0]==3 || id_rank[0]==5
 		  				  year = 6
 		  				else
