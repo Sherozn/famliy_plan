@@ -210,7 +210,7 @@ DEPENDENCIES
   listen (>= 3.0.5, < 3.2)
   mysql2 (>= 0.3.18, < 0.6.0)
   puma (~> 3.7)
-  rails (~> 5.1.6, >= 5.1.6.1)
+  rails (= 5.1.6.1)
   rest-client
   roo
   roo-xls
