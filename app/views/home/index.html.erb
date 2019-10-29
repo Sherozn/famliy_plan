@@ -9,12 +9,14 @@
       </span>
       <% end %>
 	  </div>
-	  <div class="home-banner-links" style="left: 100px;top: 100px;">
+	  <div class="home-banner-links" style="top: 100px;">
+	    <%= link_to "添加备注", "/add_note", class: "banner-btn btn" %>
+	  </div>
+
+	  <div class="home-banner-links" style="top: 190px;">
 	    <%= link_to "方案导出", "/derive", class: "banner-btn btn",remote:true %>
 	  </div>
-	  <div class="home-banner-links" style="left: 350px;top: 150px;">
-	    <%= link_to "费率表导入", "#", class: "banner-btn btn" %>
-	  </div>
+	  
 	</div>
 </div>
 

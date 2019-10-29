@@ -6,40 +6,48 @@
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 		<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag  'application','color03','sm_base', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag "application","vendor/jquery.anystretch.min", 'data-turbolinks-track': 'reload'%>
   </head>
 
   <body>
   	<div class="navbar clearfix">
-		  <div class="container">
-		    <a class="navbar-brand" href="/">家庭保障规划</a>
-		    <ul class="nav right">
-		        <li><%= link_to "登录","#" %></li>
-		        <li><%= link_to "注册","#" %></li>
-		    </ul>
-		  </div>
-		</div>
+	    <div class="container">
+	      <a class="navbar-brand" href="/">家庭保障规划</a>
+	      <ul class="nav left">
+	        <% if @current_user && @current_user.role == 1 %>
+	          <li><%= link_to "关于","#" %></li>
+	          <li><%= link_to "用户管理","#" %></li>
+	        <% elsif @current_user && @current_user.role == 2 %>
+	          <li><%= link_to "关于","#" %></li>
+	          <li><%= link_to "管理员账户激活", "/account_active" %></li>
+	        <% elsif @current_user && @current_user.role == 0 %>
+	          <li><%= link_to "关于","#" %></li>
+	        <% end %>
+	      </ul>
+	      <ul class="nav right">
+	        <% if @current_user %>
+	          <li><%= link_to "用户名:"+@current_user.name,"#" %></li>
+	          <li><%= link_to "权限:"+Account::ROLE[@current_user.role],"#"%></li>
+	          <li><%= link_to "退出","/logout",method:'delete' %></li>
+	        <% else %>
+	          <li><%= link_to "登录","/login" %></li>
+	          <li><%= link_to "注册","/signup" %></li>
+	        <% end %>
+	      </ul>
+	    </div>
+	  </div>
     <%= yield %>
+		<% if flash.notice %>
+	    <div class="notice"><%= flash.notice %></div>
+	  <% end %>
+	  <div class="footer">
+	    <div>
+	       <a href="http://www.beian.miit.gov.cn/"><p class="align">沪ICP备19036706号-1</p></a>
+	    </div>
+	  </div>
 
-    <script>
-    	$(function(){
-				<% unless flash[:notice].blank? %>
-				<% if flash[:notice] == "已成功删除！" %>
-				swal({
-					title: "<%= flash[:notice] %>",
-					type: "success",
-					confirmButtonText: "确定"
-				}); 	
-				<% else %>
-				swal({
-					title : "<%= flash[:notice] %>",
-					confirmButtonText : "确定"
-				});
-				<% end %>
-				<% flash[:notice] = nil %>
-				<% end %>
-			})
+	  <script>
 	  	$('.home-banner').anystretch();
 
 	    var hideNotice = function(){

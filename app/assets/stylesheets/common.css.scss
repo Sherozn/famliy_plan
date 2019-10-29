@@ -35,7 +35,7 @@ ul {
 
 a {
   text-decoration: none;
-  color: #f5999d;
+  color: #2798c2;
 }
 a:hover {
   color: #845534;
@@ -43,10 +43,10 @@ a:hover {
 
 .btn-primary {
   color: white;
-  background: #f5999d;
-  border-color: #f49bc1;
+  background: #2798c2;
+  border-color: #2798c2;
   &:hover {
-    background-color: #f49bc1;
+    background-color: #2798c2;
     border-color: #845534;
   }
 }
@@ -91,7 +91,7 @@ form {
   label {
     display: inline-block;
     margin-bottom: 5px;
-    color:#f5999d;
+    color:#2798c2;
   }
   dd {
     margin: 0;
@@ -103,8 +103,8 @@ form {
 }
 .notice {
   position: absolute;
-  background: #f5999d;
-  right: 50%;
+  background: #2798c2;
+  right: 43%;
   bottom: 50%;
   color: white;
   padding: 20px;

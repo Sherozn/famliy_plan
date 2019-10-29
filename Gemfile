@@ -36,6 +36,9 @@ gem 'jquery-ui-rails'
 gem 'roo'
 gem 'roo-xls'
 
+#邮件
+gem "rest-client"
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

@@ -22,7 +22,7 @@ article .body {
 }
 /* line 17, /vagrant/famliy_plan/app/assets/stylesheets/home.scss */
 article .body .read-more {
-  background-color: #f5999d;
+  background-color: #2798c2;
   color: #fff;
   font-size: 14px;
   border-radius: 4px;
@@ -117,7 +117,7 @@ article .avatar {
   border-bottom: 1px solid #ddd;
   margin-top: 0;
   margin-bottom: 30px;
-  background: #f5999d;
+  background: #2798c2;
   color: #fff;
 }
 /* line 111, /vagrant/famliy_plan/app/assets/stylesheets/home.scss */

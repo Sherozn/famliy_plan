@@ -38,11 +38,12 @@ class Note < ApplicationRecord
 			if age < 15 && product_type == 2
 				insurances_arr = Insurance.where(id:[16]).order(rank: :desc)
 			end
-			if age > 50 && (product_type == 2 || product_type == 1)
-				insurances_arr = []
-			end
+
 			if age > 40 && product_type == 1
 				insurances_arr = insurances_arr.where.not(id:20)
+			end
+			if age > 50 && (product_type == 1 || product_type == 2)
+				insurances_arr = []
 			end
 			if age > 60 && product_type == 3
 				if age <=65 

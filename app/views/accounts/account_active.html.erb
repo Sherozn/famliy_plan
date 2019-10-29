@@ -1,0 +1,20 @@
+<div class="container">
+  <table class="active_table" border="1px" style="">
+  <tr>
+  	<th>用户名称</th>
+    <th>用户邮箱</th>
+    <th>账户状态</th>
+  </tr>
+  <% @accounts.each do |account| %>
+  	<tr>
+  		<td width="30%" ><%= account.name %></td>
+  		<td width="40%"><%= account.email %></td>
+  		<% if account.status == 1 %>
+  		  <td width="30%" class="name"><a href="/update_active/<%= account.id %>">未激活</a></td>
+  		<% else %>
+  		  <td width="30%">已激活</td>
+  		<% end %>
+  	</tr>
+  <% end %>
+  </table>
+</div>

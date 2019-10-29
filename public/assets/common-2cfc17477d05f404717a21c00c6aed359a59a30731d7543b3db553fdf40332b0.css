@@ -46,7 +46,7 @@ ul {
 /* line 36, /vagrant/famliy_plan/app/assets/stylesheets/common.css.scss */
 a {
   text-decoration: none;
-  color: #f5999d;
+  color: #2798c2;
 }
 
 /* line 40, /vagrant/famliy_plan/app/assets/stylesheets/common.css.scss */
@@ -57,12 +57,12 @@ a:hover {
 /* line 44, /vagrant/famliy_plan/app/assets/stylesheets/common.css.scss */
 .btn-primary {
   color: white;
-  background: #f5999d;
-  border-color: #f49bc1;
+  background: #2798c2;
+  border-color: #2798c2;
 }
 /* line 48, /vagrant/famliy_plan/app/assets/stylesheets/common.css.scss */
 .btn-primary:hover {
-  background-color: #f49bc1;
+  background-color: #2798c2;
   border-color: #845534;
 }
 
@@ -110,7 +110,7 @@ form textarea {
 form label {
   display: inline-block;
   margin-bottom: 5px;
-  color: #f5999d;
+  color: #2798c2;
 }
 /* line 96, /vagrant/famliy_plan/app/assets/stylesheets/common.css.scss */
 form dd {
@@ -125,7 +125,7 @@ form .error {
 /* line 104, /vagrant/famliy_plan/app/assets/stylesheets/common.css.scss */
 .notice {
   position: absolute;
-  background: #f5999d;
+  background: #2798c2;
   right: 50%;
   bottom: 50%;
   color: white;

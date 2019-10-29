@@ -1,4 +1,5 @@
 class HomeController < ApplicationController
+	before_action :check_login
   def index
   	path = "/vagrant/famliy_plan/public/家庭保障方案.xlsx"
   	begin
@@ -16,8 +17,7 @@ class HomeController < ApplicationController
     # book.write path
   end
 
-  # array = (%x{cd lib/python/ && python make_excel.py})
-  # array = (%x{cd lib/python/ && python gf_api.py "#{appKey}" "#{userID}" "#{indexName}"})
+
   def derive
   	array = (%x{cd lib/python/ && python make_excel.py})
 
@@ -192,6 +192,12 @@ class HomeController < ApplicationController
   	@note = Note.new(insurance_id:@ins_id,name:@name)
   end
 
+    #添加备注
+  def add_note
+  	@note = Note.new
+  	@insurances = Insurance.where(status:0)
+  end
+
   def create_note
   	insurance_id = params[:note][:insurance_id]
   	name = params[:note][:name]
@@ -203,5 +209,25 @@ class HomeController < ApplicationController
   	@note.save
 
   	redirect_to "/new_note/#{params[:note][:insurance_id]}/#{params[:note][:name]}" , notice: "添加成功"
+  end
+
+  def search_product
+    # if !params[:ids].blank?
+    #   @ids = params[:ids] == "," ? 0 : params[:ids].to_s.split(',')
+    # end
+    # if !@ids.blank? && @ids != 0
+    #   @ps = Product.conn().where("company_id = ? and ( name like ? or id in (?) ) and status = 0 and address_type in (?)", @company.id, "%#{params[:name]}%",@ids,address_type)  
+    # else
+    #   @ps = Product.conn().where("company_id = ? and name like ? and status = 0 and address_type in (?)", @company.id, "%#{params[:name]}%",address_type)  
+    # end  
+    # @ps = Product.order_list(@ps)
+    # if !@ps.blank? && @type.blank?  && ( @source == 0 || @source == 11 )
+    #   @ps = if @ps.length%2 == 0
+    #         @ps.each_slice(@ps.length/2).to_a
+    #       else
+    #         @ps.each_slice(@ps.length/2+1).to_a
+    #       end
+    # end
+    # @ts = params[:the_t_stamp].to_i
   end
 end

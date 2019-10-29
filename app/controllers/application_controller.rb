@@ -1,5 +1,11 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
+
+  #检查登录
+  def check_login
+	  @current_user ||= cookies[:auth_token] && Account.find_by(auth_token:cookies[:auth_token])
+  end
+
   # 获取各种情况下应该买的险种
   def self.get_product_types(man_income,woman_income,member)
 		sum_income = man_income + woman_income
