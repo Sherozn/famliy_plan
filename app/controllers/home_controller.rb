@@ -1,19 +1,19 @@
 class HomeController < ApplicationController
 	before_action :check_login
   def index
-  	path = "/vagrant/famliy_plan/public/家庭保障方案.xlsx"
-  	begin
-	  	xls = Roo::Excelx.new path
-	  rescue
-	  	xls = Roo::Excel.new unzip_file
-	  end
-	  sheet = xls.sheet(2)
-    sheet.each_with_index do |arr, j|
-    	if j==2
-    		sheet.row(j)[6] = "你好"
-    		p arr[6]
-    	end
-    end
+  	# path = "/vagrant/famliy_plan/public/家庭保障方案.xlsx"
+  	# begin
+	  # 	xls = Roo::Excelx.new path
+	  # rescue
+	  # 	xls = Roo::Excel.new path
+	  # end
+	  # sheet = xls.sheet(2)
+   #  sheet.each_with_index do |arr, j|
+   #  	if j==2
+   #  		sheet.row(j)[6] = "你好"
+   #  		p arr[6]
+   #  	end
+   #  end
     # book.write path
   end
 
