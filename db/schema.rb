@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 20191023111352) do
 
-  create_table "accounts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "accounts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.string "name"
     t.string "email"
     t.string "password"
@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 20191023111352) do
     t.string "auth_token"
   end
 
-  create_table "comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.integer "insurance_id"
     t.integer "disease_id"
     t.integer "status", default: 0
@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(version: 20191023111352) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "diseases", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "diseases", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.string "code", limit: 10
     t.string "name"
     t.integer "rank"
@@ -42,7 +42,7 @@ ActiveRecord::Schema.define(version: 20191023111352) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "insurances", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "insurances", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.integer "code"
     t.string "name"
     t.integer "status", default: 0
@@ -55,7 +55,7 @@ ActiveRecord::Schema.define(version: 20191023111352) do
     t.text "note"
   end
 
-  create_table "issue_items", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "issue_items", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.string "answer"
     t.integer "issue_id"
     t.integer "next_issue_id"
@@ -65,7 +65,7 @@ ActiveRecord::Schema.define(version: 20191023111352) do
     t.integer "flag"
   end
 
-  create_table "issues", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "issues", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.string "content"
     t.string "insurance_ids"
     t.integer "disease_id"
@@ -75,7 +75,7 @@ ActiveRecord::Schema.define(version: 20191023111352) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "notes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "notes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.string "name"
     t.integer "insurance_id"
     t.integer "product_type"
@@ -85,7 +85,7 @@ ActiveRecord::Schema.define(version: 20191023111352) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "rates", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "rates", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.integer "insurance_id"
     t.string "group"
     t.integer "year"
