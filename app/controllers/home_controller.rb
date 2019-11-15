@@ -21,8 +21,10 @@ class HomeController < ApplicationController
   def derive
   	array = (%x{cd lib/python/ && python make_excel.py})
 
-  	path = "/vagrant/famliy_plan/public/1力哥理财家庭保障规划.xlsx"
-    send_file path, :type=>"application/octet-stream;charset=utf-8", :filename => CGI::escape("家庭保障规划方案.xlsx"), :x_sendfile=>true
+  	path = "#{Rails.root}/public/1力哥理财家庭保障规划.xlsx"
+  	# send_file path, :type=>"application/octet-stream;charset=utf-8", :filename => "#{valuation_table.filename}.xls", disposition: 'attachment'
+
+    send_file path, :type=>"application/octet-stream;charset=utf-8", :filename => CGI::escape("家庭保障规划方案.xlsx"), disposition: 'attachment'
   end
 
   def import_information

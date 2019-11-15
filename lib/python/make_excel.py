@@ -73,6 +73,7 @@ class QueryResult:
                 ws.write(row+i, 10, nn)
             sum += sum_fee
             
+            
             # nn = u"你好"
             ws.write_merge(row, row+len(value)-1, 8, 8, unicode(str(sum_fee), 'utf-8'), style3)
             
