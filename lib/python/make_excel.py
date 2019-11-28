@@ -16,7 +16,7 @@ class QueryResult:
     def __init__(self,data):
         # style0 = xlwt.easyxf('alignment: horz center,vert center;font: name 宋体, color-index black,bold on,height 280;pattern: pattern solid, fore_colour dark_green_ega;align: wrap on; ')
         wb = xlwt.Workbook()
-        ws = wb.add_sheet(u'3、家庭保障规划')
+        ws = wb.add_sheet(u'3、家庭保障规划',cell_overwrite_ok=True)
         ws.col(0).width=256*12 
         ws.col(1).width=256*10
         ws.col(2).width=256*18
@@ -56,37 +56,99 @@ class QueryResult:
         exec("data="+data)
         sum = 0.0
         nn = u"\n\n\n\n\n\n\n\n\n"
+        # 家庭成员级别
+       
         for (member,value) in data.items():
-            ws.write_merge(row, row+len(value)-1, 0, 0, unicode(str(member), 'utf-8'), style2)
+            items_no = 0
+            init_row = row
+            
             sum_fee = 0.0
+            # items是每一个疾病对应的数组，比如：["寿险", "华贵保险\n大麦正青春", "10.0万", "交30年保到60岁", "1.等待期90天\n2.保费递增型，保费按每年3%的比例增长\n3.等待期后身故/全残保险金：基本保险金额", "", "43.00", "甲状腺结节（无明确分级）"]
+            # 保险名称初始化
+            ins_str = ""
+            # 备注的序号
+            ii = 1
+            # 每一列的初始值
+            col1,col2,col3,col4,col5,col6,col7 = "","","","","","",""
+            # 备注的总和
+            issues = ""
+            flag = 0
             for i,items in enumerate(value):
-                for index,item in enumerate(items):
-                    # print(item)
+                items_no += 1
+                #是否合并单元格的标志
+                flag = 0
+                # item是最低一级数组的每一项，就比如寿险、10.0万
+                # 如果现在数组中的保险名称发生了变化，说明现在应该合并了
+                if(items[1] != ins_str):
+                    ins_str = items[1]
+                    flag = 1
+                    
+                #说明已经到了下一个保险了
+                if(flag == 1 and items_no != 1):
+                    if(row != 1):
+                        for ind in [1,2,3,4,5,6,7]:
+                            if(ind == 1):
+                                ws.write(row,1,unicode(str(col1), 'utf-8'),style4)
+                            elif(ind == 6):
+                                ws.write(row,6,unicode(str(col6), 'utf-8'),style4)
+                            else:
+                                col_name = "col" + str(ind)
+                                ws.write(row,ind,unicode(str(eval(col_name)), 'utf-8'),style4)
+                        ii = 1
+                        issues = ""
+                    row += 1
+               
+                for index,item in enumerate(items): 
                     if(index == 6):
                         sum_fee += float(item)
+                    elif(index == 7):
+                        if(items[5] == ""):
+                            items[5] = "健康告知没有限制到，可以正常投保"
+                        issues = issues + str(ii)+ u'、' + item + ":" + items[5] + u";\n"
+                        ii += 1
+
                     if(index == 0):
-                        ws.write(row+i,index+1,unicode(str(item), 'utf-8'),style3)
-                    elif(index < 4):
-                        ws.write(row+i,index+1,unicode(str(item), 'utf-8'),style5)
+                        col1 = item
+                    elif(index == 1):
+                        col2 = item
+                    elif(index == 2):
+                        col3 = item
+                    elif(index == 3):
+                        col4 = item
+                    elif(index == 4):
+                        col5 = item
+                    elif(index == 6):
+                        col7 = item
+                    elif(index == 7 and items[0] != u"意外险"):
+                        col6 = issues
+                    elif(index == 7 and items[0] == u"意外险"):
+                        col6 = item
+                        # eval(col_name) = item
+
+                
+                # ws.write(row+i, 10, nn)
+
+            if(flag == 1):
+                for ind in [1,2,3,4,5,6,7]:
+                    if(ind == 1):
+                        ws.write(row,1,unicode(str(col1), 'utf-8'),style4)
+                    elif(ind == 6):
+                        ws.write(row,6,unicode(str(col6), 'utf-8'),style4)
                     else:
-                        ws.write(row+i,index+1,unicode(str(item), 'utf-8'),style4)
-                ws.write(row+i, 10, nn)
+                        col_name = "col" + str(ind)
+                        ws.write(row,ind,unicode(str(eval(col_name)), 'utf-8'),style4)
+                row += 1
             sum += sum_fee
-            
-            
-            # nn = u"你好"
-            ws.write_merge(row, row+len(value)-1, 8, 8, unicode(str(sum_fee), 'utf-8'), style3)
-            
-            ws.write_merge(row+len(value), row+len(value), 0, 9, u'', style1)
-            row += 1
-            row += len(value)
+            ws.write_merge(init_row, row-1, 0, 0, unicode(str(member), 'utf-8'), style2)
+            ws.write_merge(init_row, row-1, 8, 8, unicode(str(sum_fee), 'utf-8'), style3)
+            ws.write_merge(row, row, 0, 9, u'', style1)    
                     
         ws.write_merge(0, 0, 0, 9, u'家庭保障清单', style0)
-        ws.write(row,0,u'合计',style0)
+        ws.write(row+1,0,u'合计',style0)
+        ws.write_merge(row+1,row+1,1,6,u'',style0)
+        ws.write(row+1,9,u'',style0)
 
-        for index in [1,2,3,4,5,6,9]:
-            ws.write(row,index,u'',style0)
-        ws.write_merge(row,row,7,8,unicode(str(sum), 'utf-8'),style0)
+        ws.write_merge(row+1,row+1,7,8,unicode(str(sum), 'utf-8'),style0)
         path = "/vagrant/famliy_plan/public/1力哥理财家庭保障规划.xlsx"
         wb.save(path)
 
