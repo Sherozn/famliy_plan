@@ -53,7 +53,7 @@ class Rate < ApplicationRecord
             end
         end
         # low_fee = sum_amount*0.03/1000
-        rate = Rate.where(insurance_id:ins_id,age:age,sex:sex_num,year:70,group: [0, 1, 2]).order(:jf_year).last
+        rate = Rate.where(insurance_id:ins_id,age:age,sex:sex_num,year:70).order(:jf_year).last
         if rate
           jf_sum = fee * 10000/1000 * rate.rate
           jf_year = rate.jf_year
@@ -304,65 +304,65 @@ class Rate < ApplicationRecord
 	# 擎天柱3号
 	# Rate.import_rate_6
 	def self.import_rate_6
-	path = "/vagrant/famliy_plan/public/擎天柱3号费率表.xlsx"
-  	xls = Roo::Excelx.new path
-  	sheet = xls.sheet(0)
-  	group = [0]
-    year = nil
-    insurance_id = nil
-    # sex = nil
-    jf_year = nil
-    sheet.each_with_index do |arr, j|
-    	Rails.logger.info "=====year=#{year}========="
-    	if arr[0].to_s =~ /\d{1,2}/ && arr[0].to_s.length < 3
-    		age = arr[0].to_i
-    		(3..10).each do |i|
-    			if i == 3
-    				jf_year = 5
-    			elsif i == 5
-    				jf_year = 10
-    			elsif i == 7
-    				jf_year = 20
-    			elsif i == 9
-    				jf_year = 30
-    			end
-    			if i % 2 == 0
-    				sex = 1
-    			elsif i % 2 == 1
-    				sex = 0
-    			end
-    			rate = arr[i]
-    			if !rate.blank?
-    				Rails.logger.info "insurance_id===#{insurance_id}==jf_year=#{jf_year}==sex===#{sex}====age=#{age}===year====#{year}====rate=#{rate}====="
-    				Rate.find_or_create_by(insurance_id:insurance_id,jf_year:jf_year,sex:sex,age:age,year:year,group:group,rate:rate)
-    			end
-    		end
-    	elsif arr[0]
-    		# [3,4,5].each do |ii|
-    			Rails.logger.info "===arr[0]=========#{arr[0]}"
-    			arr0 = arr[0].to_s.gsub(" ","")
-		    	if arr0.include?("20")
-		    		year = 20
-		    	elsif arr0.include?("30")
-		    		year = 30
-		    	elsif arr0.include?("60")
-		    		year = 60
-		    	elsif arr0.include?("65")
-		    		year = 65
-		    	elsif arr0.include?("70")
-		    		year = 70
-		    	elsif arr0.include?("80")
-		    		year = 80
-		    	end
+    	path = "/vagrant/famliy_plan/public/擎天柱3号费率表.xlsx"
+      	xls = Roo::Excelx.new path
+      	sheet = xls.sheet(0)
+      	group = [0]
+        year = nil
+        insurance_id = nil
+        # sex = nil
+        jf_year = nil
+        sheet.each_with_index do |arr, j|
+        	Rails.logger.info "=====year=#{year}========="
+        	if arr[0].to_s =~ /\d{1,2}/ && arr[0].to_s.length < 3
+        		age = arr[0].to_i
+        		(3..10).each do |i|
+        			if i == 3
+        				jf_year = 5
+        			elsif i == 5
+        				jf_year = 10
+        			elsif i == 7
+        				jf_year = 20
+        			elsif i == 9
+        				jf_year = 30
+        			end
+        			if i % 2 == 0
+        				sex = 1
+        			elsif i % 2 == 1
+        				sex = 0
+        			end
+        			rate = arr[i]
+        			if !rate.blank?
+        				Rails.logger.info "insurance_id===#{insurance_id}==jf_year=#{jf_year}==sex===#{sex}====age=#{age}===year====#{year}====rate=#{rate}====="
+        				Rate.find_or_create_by(insurance_id:insurance_id,jf_year:jf_year,sex:sex,age:age,year:year,group:group,rate:rate)
+        			end
+        		end
+        	elsif arr[0]
+        		# [3,4,5].each do |ii|
+        			Rails.logger.info "===arr[0]=========#{arr[0]}"
+        			arr0 = arr[0].to_s.gsub(" ","")
+    		    	if arr0.include?("20")
+    		    		year = 20
+    		    	elsif arr0.include?("30")
+    		    		year = 30
+    		    	elsif arr0.include?("60")
+    		    		year = 60
+    		    	elsif arr0.include?("65")
+    		    		year = 65
+    		    	elsif arr0.include?("70")
+    		    		year = 70
+    		    	elsif arr0.include?("80")
+    		    		year = 80
+    		    	end
 
-		    	if arr0.include?("优选体")
-		    		insurance_id = 6
-		    	elsif arr0.include?("标准体")
-		    		insurance_id = 7
-		    	end
-	    	# end
-    	end
-    end
+    		    	if arr0.include?("优选体")
+    		    		insurance_id = 6
+    		    	elsif arr0.include?("标准体")
+    		    		insurance_id = 7
+    		    	end
+    	    	# end
+        	end
+        end
 	end
 
 	# 擎天柱3号附加豁免
@@ -411,6 +411,27 @@ class Rate < ApplicationRecord
             rate = Rate.find_or_create_by(insurance_id:20,year: 60,status:0,jf_year: jf_year,age:age,sex:sex)
             rate.rate = ra
             rate.save
+        end
+    end
+
+    def self.import
+        path = "/vagrant/famliy_plan/public/臻爱优选费率表.xlsx"
+        xls = Roo::Excelx.new path
+        sheet = xls.sheet(0)
+        sheet.each_with_index do |arr, j|
+            if !arr[0].blank? && j > 0
+                age = arr[0].to_i
+                sex = arr[1].to_i
+                jf_year = arr[2].to_i
+                year = arr[3].to_i
+                rate = arr[4].to_f
+                group = arr[5].to_s.strip.split("、").map{|gr| gr.to_i}
+                insurance_id = arr[6].to_i
+            end  
+            if !rate.blank?
+                Rails.logger.info "insurance_id===#{insurance_id}==jf_year=#{jf_year}==sex===#{sex}====age=#{age}===year====#{year}====rate=#{rate}=====group=#{group}"
+                Rate.find_or_create_by(insurance_id:insurance_id,jf_year:jf_year,sex:sex,age:age,year:year,group:group,rate:rate)
+            end
         end
     end
 end
