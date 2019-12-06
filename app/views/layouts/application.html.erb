@@ -20,7 +20,6 @@
 	          <li><%= link_to "用户管理","#" %></li>
 	        <% elsif @current_user && @current_user.role == 2 %>
 	          <li><%= link_to "关于","#" %></li>
-	          <li><%= link_to "管理员账户激活", "/account_active" %></li>
 	        <% elsif @current_user && @current_user.role == 0 %>
 	          <li><%= link_to "关于","#" %></li>
 	        <% end %>
