@@ -17,6 +17,10 @@ class HomeController < ApplicationController
     # book.write path
   end
 
+  def down_rate
+  	path = "#{Rails.root}/public/费率表模板.xlsx"
+  	send_file path, :type=>"application/octet-stream;charset=utf-8", :filename => CGI::escape("费率表模板.xlsx"), disposition: 'attachment'
+  end
 
   def derive
   	array = (%x{cd lib/python/ && python make_excel.py})
@@ -24,7 +28,7 @@ class HomeController < ApplicationController
   	path = "#{Rails.root}/public/1力哥理财家庭保障规划.xlsx"
   	# send_file path, :type=>"application/octet-stream;charset=utf-8", :filename => "#{valuation_table.filename}.xls", disposition: 'attachment'
 
-    send_file path, :type=>"application/octet-stream;charset=utf-8", :filename => CGI::escape("家庭保障规划方案.xlsx"), disposition: 'attachment'
+    send_file path, :type=>"application/octet-stream;charset=utf-8", :filename => CGI::escape("力哥理财家庭保障规划.xlsx"), disposition: 'attachment'
   end
 
   def import_information
@@ -33,10 +37,13 @@ class HomeController < ApplicationController
 
   def create_information
   	ori_file = params[:file].original_filename
+  	Rails.logger.info "===========文件名称======#{ori_file}"
   	begin
+  		Rails.logger.info "===========第一个错误======#{ori_file}"
 	    xlsx = Roo::Spreadsheet.open(params[:file])
 	    sheet = xlsx.sheet(0)
-	  rescue
+	  rescue e
+	  	Rails.logger.info "===========第二个错误======#{e}"
 	  	xlsx = Spreadsheet.open(params[:file])
 	  	sheet = xlsx.worksheet(0)
 	  end

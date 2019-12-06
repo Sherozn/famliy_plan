@@ -13,6 +13,7 @@ Rails.application.routes.draw do
 	get 'new_note/:ins_id/:name', to: 'home#new_note'
 	post 'create_note', to: 'home#create_note'
 	get 'derive', to: 'home#derive'
+	get 'down_rate', to: 'home#down_rate'
 
 
 	get 'add_note', to: 'home#add_note'

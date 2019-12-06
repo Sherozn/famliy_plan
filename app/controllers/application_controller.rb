@@ -54,6 +54,7 @@ class ApplicationController < ActionController::Base
 		# fn = birth.to_s.gsub("年","-").gsub("月","-").gsub(".","-").gsub("/","-")
     # m = fn.match(/\d{4}[-\.\/]?(0\d|1[012])[-\.\/]?[0123]?\d{1}/)
     if !birth.blank?
+    	birth = birth.gsub("年","-").gsub("月","-").gsub(".","-").gsub("/","-")
 		  age = ((Date.today - Time.parse(birth).to_date) / 365).floor
 		else
 			age = 100

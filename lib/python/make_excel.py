@@ -141,7 +141,8 @@ class QueryResult:
             sum += sum_fee
             ws.write_merge(init_row, row-1, 0, 0, unicode(str(member), 'utf-8'), style2)
             ws.write_merge(init_row, row-1, 8, 8, unicode(str(sum_fee), 'utf-8'), style3)
-            ws.write_merge(row, row, 0, 9, u'', style1)    
+            ws.write_merge(row, row, 0, 9, u'', style1)   
+            row += 1
                     
         ws.write_merge(0, 0, 0, 9, u'家庭保障清单', style0)
         ws.write(row+1,0,u'合计',style0)
