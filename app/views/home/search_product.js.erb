@@ -1,0 +1,10 @@
+$("#select-ill").html("");
+var obj = '';
+<% if @ills.count > 0 %>
+	<% @ills.each do |ill|%>
+		obj += "<option value= '<%= ill.id %>'><%= ill.name %></option>";
+	<% end %>
+<% else %>
+	obj = "<option value='0'>没有匹配到任何疾病，请重新输入</option>";
+<% end %>
+$("#select-ill").append(obj);

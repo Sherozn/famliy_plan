@@ -114,4 +114,17 @@ class Note < ApplicationRecord
 		end
 		[notes,row]
 	end
+
+
+  # 将note的疾病名称改成ill_id
+  def self.add_ill_id
+  	Note.all.each do |note|
+  		name = note.name
+	  	ill = Ill.where(name:name).last
+	  	if ill && !note.ill_id
+	  		note.ill_id = ill.id
+	  		note.save
+	  	end
+  	end
+  end
 end

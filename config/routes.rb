@@ -10,7 +10,7 @@ Rails.application.routes.draw do
 
 	get 'import_information', to: 'home#import_information'
 	post 'create_information', to: 'home#create_information'
-	get 'new_note/:ins_id/:name', to: 'home#new_note'
+	get 'new_note/:ins_id/:ill_id', to: 'home#new_note'
 	post 'create_note', to: 'home#create_note'
 	get 'derive', to: 'home#derive'
 	get 'down_rate', to: 'home#down_rate'
