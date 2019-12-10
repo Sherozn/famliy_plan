@@ -208,46 +208,36 @@ class HomeController < ApplicationController
   def new_note
   	@ins_id = params[:ins_id]
   	@ins = Insurance.find(@ins_id)
-  	@name = params[:name]
-  	@note = Note.new(insurance_id:@ins_id,name:@name)
+  	@ill_id = params[:ill_id]
+  	@ill = Ill.find(@ill_id)
+  	@note = Note.new(insurance_id:@ins_id,ill_id:@ill_id)
   end
 
-    #添加备注
+   #添加备注
   def add_note
   	@note = Note.new
   	@insurances = Insurance.where(status:0)
+  	@ills = Ill.all
   end
 
   def create_note
-  	insurance_id = params[:note][:insurance_id]
-  	name = params[:note][:name]
-  	note = params[:note][:note]
+  	insurance_id = params[:insurance_id].blank?? params[:note][:insurance_id] : params[:insurance_id]
+  	ill_id = params[:ill_id].blank?? params[:note][:ill_id] : params[:ill_id]
   	rank = params[:rank]
-  	@note = Note.find_or_create_by(insurance_id:insurance_id,name:name)
+  	note = params[:note][:note]
+  	Rails.logger.info "====insurance_id=====#{insurance_id}========"
+  	@note = Note.find_or_create_by(insurance_id:insurance_id,ill_id:ill_id)
   	@note.rank = rank
   	@note.note = note
   	@note.save
 
-  	redirect_to "/new_note/#{params[:note][:insurance_id]}/#{params[:note][:name]}" , notice: "添加成功"
+  	redirect_to "/add_note", notice: "添加成功"
   end
 
   def search_product
-    # if !params[:ids].blank?
-    #   @ids = params[:ids] == "," ? 0 : params[:ids].to_s.split(',')
-    # end
-    # if !@ids.blank? && @ids != 0
-    #   @ps = Product.conn().where("company_id = ? and ( name like ? or id in (?) ) and status = 0 and address_type in (?)", @company.id, "%#{params[:name]}%",@ids,address_type)  
-    # else
-    #   @ps = Product.conn().where("company_id = ? and name like ? and status = 0 and address_type in (?)", @company.id, "%#{params[:name]}%",address_type)  
-    # end  
-    # @ps = Product.order_list(@ps)
-    # if !@ps.blank? && @type.blank?  && ( @source == 0 || @source == 11 )
-    #   @ps = if @ps.length%2 == 0
-    #         @ps.each_slice(@ps.length/2).to_a
-    #       else
-    #         @ps.each_slice(@ps.length/2+1).to_a
-    #       end
-    # end
-    # @ts = params[:the_t_stamp].to_i
+  	ill_name = params[:name]
+  	Rails.logger.info("===输入的名称=======#{ill_name}")
+  	@ills = Ill.where("name like '%#{ill_name}%'")
+  	Rails.logger.info("====@ills.ids======#{@ills.ids}")
   end
 end

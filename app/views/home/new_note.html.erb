@@ -1,7 +1,7 @@
 <div class="modal-content">
     <%= form_for @note,url: "/create_note", authenticity_token: true, html:{class: "form-horizontal",id: "pop_form" , multipart: true} do |f| %>
       <h2>添加备注信息</h2>
-      <h4>疾病名称：<%= @note.name %></h4>
+      <h4>疾病名称：<%= @ill.name %></h4>
       <h4>保险名称：<%= @ins.name %></h4>
       <h4>核保结果：<br>
         <select name="rank" class="form-control">
@@ -18,7 +18,7 @@
         <%=f.text_area :note,class: "text-area"%>
       </h4>
       <div>
-        <%= f.hidden_field :name %>
+        <%= f.hidden_field :ill_id %>
         <%= f.hidden_field :insurance_id %>
         <%=f.submit "提交",class: "btn btn-primary form-control"%>
          <!-- <button type="submit" class="btn btn-primary" >提交</button> -->

@@ -7,7 +7,7 @@
 		<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 
     <%= stylesheet_link_tag  'application','color03','sm_base', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag "application","vendor/jquery.anystretch.min", 'data-turbolinks-track': 'reload'%>
+    <%= javascript_include_tag "application",'fp_base',"vendor/jquery.anystretch.min", 'data-turbolinks-track': 'reload'%>
   </head>
 
   <body>
@@ -41,7 +41,16 @@
 	  <% end %>
 	  <div class="footer">
 	    <div>
-	       <a href="http://www.beian.miit.gov.cn/"><p class="align">沪ICP备19036706号-1</p></a>
+	      <a href="http://www.beian.miit.gov.cn/"><p class="align">沪ICP备19036706号-1</p></a>
+	      <div style="width:300px;margin:0 auto; padding:20px 0;">
+			    <a target="_blank" href="" style="display:inline-block;text-decoration:none;height:20px;line-height:20px;padding-left: 30px;">
+			    	<img src="/assets/huizhang.png" style="float:left;"/>
+			    	<!-- lgshuolicai -->
+			    	<p style="float:left;height:20px;line-height:20px;margin: 0px 0px 0px 5px; color:#939393;">沪公网安备 31011202011968</p>
+			    	<!-- lglicai -->
+			    	<!-- <p style="float:left;height:20px;line-height:20px;margin: 0px 0px 0px 5px; color:#939393;">沪公网安备 31011202011965号</p> -->
+			    </a>
+			  </div>
 	    </div>
 	  </div>
 

@@ -1,22 +1,29 @@
 <div class="modal-content">
     <%= form_for @note,url: "/create_note", authenticity_token: true, html:{class: "form-horizontal",id: "pop_form" , multipart: true} do |f| %>
       <h2>添加备注信息</h2>
-      <h4 class="">疾病名称</h4>
+      <h4 class="">疾病名称：</h4>
 
       <div class="sous_new_sle sousuo_loa">
         <img src="/assets/iconfont-iconfontsousuo1.png">
-        <input type="text" onkeyup="search_product(this,'ss')" placeholder="搜索产品">
+        <input id="input-ill" type="text" placeholder="搜索疾病名称">
       </div>
       <div class="wid100_li" id="products">
-        <% @insurances.each do |insurance|%>
-          <div class="">
-            <input type="checkbox" name="insurance_id" class="one_product" value="<%= insurance.id%>"><%= insurance.name%>
-          </div>
-        <% end %>
+        <select id="select-ill" name="ill_id" class="form-control">
+          <% @ills.each do |ill|%>
+            <option value= "<%= ill.id %>"><%= ill.name %></option>
+          <% end %>
+        </select>
       </div>
 
-      <h4>保险名称：</h4>
-      <h4>核保结果：<br>
+      <h4>保险名称：
+        <select name="insurance_id" class="form-control">
+          <%@insurances.each_with_index do |ins|%>
+            <option value= "<%= ins.id %>"><%= ins.name %></option>
+          <%end%>
+        </select>
+      </h4>
+        
+      <h4>核保结果：
         <select name="rank" class="form-control">
           <option value= "1">标准体承保</option>
           <option value= "2">除外承保</option>
@@ -25,15 +32,14 @@
           <option value= "6">拒保</option>
           <option value= "7">待确认</option>
         </select>
-        
       </h4>
       <h4>备注：<br>
         <%=f.text_area :note,class: "text-area"%>
       </h4>
       <div>
-        <%= f.hidden_field :name %>
-        <%= f.hidden_field :insurance_id %>
-        <%=f.submit "提交",class: "btn btn-primary form-control"%>
+
+
+        <%= f.submit "提交",class: "btn btn-primary form-control"%>
          <!-- <button type="submit" class="btn btn-primary" >提交</button> -->
       </div>
     <% end %> 
@@ -46,11 +52,15 @@
     $('.modal-backdrop').remove();
   }
 
-  function search_product(obj,type){
-    if (type == "ss"){
-      ajax_asynchronous("/products/search_product?name="+$(obj).val());
-    }else{
-      ajax_asynchronous("/products/search_product?name="+$(obj).val()+"&type=all");
-    }
+  $('#input-ill').donetyping(function(){
+    var ill = $('#input-ill').val()
+    ajax_asynchronous("/search_product?name=" + ill);
+  });
+
+  // $('#input-ill').bind('input propertychange', function() {searchProductClassbyName();});
+
+  function searchProductClassbyName(){
+    var ill = $('#input-ill').val()
+    ajax_asynchronous("/search_product?name=" + ill)
   }
 </script>
