@@ -155,6 +155,6 @@ class QueryResult:
 
             
 if __name__=='__main__':
-    f = open("/vagrant/famliy_plan/public/file/保险信息.txt","r")
+    f = open("/vagrant/famliy_plan/public/file/info.txt","r")
     fr = f.read()
     gquery=QueryResult(fr)
