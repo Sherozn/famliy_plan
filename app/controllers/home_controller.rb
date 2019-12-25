@@ -80,14 +80,10 @@ class HomeController < ApplicationController
 	  hash = {}
 	  # flag = 0
 	  sheet.each_with_index do |rows,index|
-	  	# Rails.logger.info "=====@rows===#{rows[3].to_s}"
-	  	# Rails.logger.info "===rows======#{rows[2].to_s}====="
 	  	if index < 7
 	  		next
 	  	end
 	  	flag_member = rows[0]
-
-	  	
 	  	if !flag_member.blank? 
 	  		if flag_member != @member
 		  		if @member
@@ -104,13 +100,19 @@ class HomeController < ApplicationController
 	    			hash[[@member.to_s,notes_arr[1],age,sex]] = notes_arr[0]
 	    		end
 	  			arrs = [] 
-	  			arrs << rows[7] if rows[7]
+	  			if rows[7]
+	  				ill = Ill.find_or_create_by(name:rows[7].to_s.strip)
+	  				arrs << ill.id
+	  			end
 	  			@member = flag_member
 	  			birth = rows[3].to_s
 	  			sex = rows[2].to_s
 	  		end
-  		else
-  			arrs << rows[7] if rows[7]
+  		else	
+  			if rows[7]
+	  			ill = Ill.find_or_create_by(name:rows[7].to_s.strip)
+	  			arrs << ill.id
+	  		end
   		end
 	  end
 	  @hash = hash
@@ -191,7 +193,11 @@ class HomeController < ApplicationController
 		  			#费用
 		  			col8 = "%.2f" % jf_sum
 		  			#疾病
-		  			col9 = arr[0]
+		  			if arr[0].to_s =~ /\d{1,}/
+              col9 = Ill.find(arr[0]).name
+            else
+              col9 = arr[0]
+            end
 		  			Rails.logger.info "====col9=======#{col9}"
 		  			data[col1[0]] << [col2,col3,col4,col5,col6,col7,col8,col9]
 		  		end

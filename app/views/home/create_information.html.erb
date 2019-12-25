@@ -25,11 +25,15 @@
               <% insurance = Insurance.find(id_rank[0]) %>
               <td ><%= insurance.name %></td>
               <td><%= get_rank(id_rank[1]) %></td>
-              <td><%= arr[0] %></td>
+              <% if arr[0].to_s =~ /\d{1,}/ %>
+                <% ill_name = Ill.find(arr[0]).name %>
+              <% else %>
+                <% ill_name = arr[0] %>
+              <% end %>
+              <td><%= ill_name %></td>
               <% rank = get_rank(arr[1]) %>
               <% if rank == "待确认" %>
-                <% ill_id = Ill.find_or_create_by(name:arr[0]).id %>
-                <td><%= link_to rank, "/new_note/#{id_rank[0]}/#{ill_id}",{:target => "_blank"} %></td>
+                <td><%= link_to rank, "/new_note/#{id_rank[0]}/#{arr[0]}",{:target => "_blank"} %></td>
               <% else %>
                 <td><%= rank %></td>
               <% end %>
