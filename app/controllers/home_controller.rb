@@ -205,7 +205,7 @@ class HomeController < ApplicationController
 	  	end
 	  end
 	  Rails.logger.info "====data=======#{data}"
-	  file = File.open("#{Rails.root}/public/file/保险信息.txt","w")
+	  file = File.open("#{Rails.root}/public/file/info.txt","w")
 		file.write(data.to_s.gsub("=>",":").gsub("nil","\"\""))
 		file.close
   	# redirect_to "/show_information"
