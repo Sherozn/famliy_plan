@@ -70,7 +70,7 @@ class Note < ApplicationRecord
 				else
 					#遍历所有的疾病
 					arrs.each do |arr|
-						note = Note.find_by(insurance_id:ins.id,name:arr)
+						note = Note.find_by(insurance_id:ins.id,ill_id:arr)
 						if note
 							ins_arr << [arr,note.rank,note.note] 
 							min_rank = note.rank if note.rank < min_rank
