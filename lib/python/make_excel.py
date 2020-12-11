@@ -8,9 +8,6 @@ Created on Mon Sep 03 18:28:56 2018
 """
 import xlwt
 import os, sys
-from PIL import Image
-reload(sys)
-sys.setdefaultencoding('utf-8')
 
 class QueryResult:
     def __init__(self,data):
@@ -150,11 +147,11 @@ class QueryResult:
         ws.write(row+1,9,u'',style0)
 
         ws.write_merge(row+1,row+1,7,8,unicode(str(sum), 'utf-8'),style0)
-        path = "/vagrant/famliy_plan/public/1力哥理财家庭保障规划.xlsx"
+        path = "/mnt/family_plan/public/1力哥理财家庭保障规划.xlsx"
         wb.save(path)
 
             
 if __name__=='__main__':
-    f = open("/vagrant/famliy_plan/public/file/info.txt","r")
+    f = open("/mnt/family_plan/public/file/info.txt","r")
     fr = f.read()
     gquery=QueryResult(fr)
